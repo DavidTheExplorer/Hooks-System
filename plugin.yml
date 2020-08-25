@@ -1,0 +1,4 @@
+name: HooksSystem
+main: com.hooksystem.exampleplugin.ExampleMain
+softdepend: [LuckPerms, WorldGuard]
+version: 1.0
