@@ -21,7 +21,7 @@ public class DisplayGroupListener implements Listener
 	public void onPlayerJoin(PlayerJoinEvent event) 
 	{
 		Player player = event.getPlayer();
-		String playerGroupName = this.permissionsManager.getPlayerGroup(player.getUniqueId());
+		String playerGroupName = this.permissionsManager.getPlayerGroupName(player.getUniqueId());
 		
 		Bukkit.broadcastMessage(String.format("%s belongs to %s group", player.getName(), playerGroupName));
 	}

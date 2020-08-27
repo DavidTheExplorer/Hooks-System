@@ -28,7 +28,7 @@ public class LuckPermsHook extends BasicPluginHook implements PermissionsManager
 		this.luckPerms = LuckPerms.getApi();
 	}
 	@Override
-	public String getPlayerGroup(UUID playerUUID) 
+	public String getPlayerGroupName(UUID playerUUID) 
 	{
 		return this.luckPerms.getUserManager().getUser(playerUUID).getPrimaryGroup();
 	}

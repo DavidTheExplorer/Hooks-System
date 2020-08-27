@@ -27,7 +27,7 @@ public abstract class BasicPluginHook implements IPluginHook
 	@Override
 	public int hashCode() 
 	{
-		return Objects.hash(this.plugin);
+		return getPluginName().hashCode();
 	}
 	@Override
 	public boolean equals(Object object)

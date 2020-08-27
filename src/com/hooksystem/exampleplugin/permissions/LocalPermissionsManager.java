@@ -11,7 +11,7 @@ public class LocalPermissionsManager implements PermissionsManager
 	}
 	
 	@Override
-	public String getPlayerGroup(UUID playerUUID) 
+	public String getPlayerGroupName(UUID playerUUID) 
 	{
 		return "noobs";
 	}

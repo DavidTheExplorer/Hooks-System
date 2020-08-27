@@ -11,8 +11,8 @@ public interface IPluginHook
 	/**
 	 * Returns whether the plugin is currently in the server and can be used.
 	 * <p>
-	 * If this method returned false, <b> don't use any of this hook's methods.
-	 * @return the existence of the plugin in the server
+	 * Used <i>internally</i> for registration, you're not supposed to use it.
+	 * @return the useability of the plugin
 	 */
 	public boolean isPresent();
 	

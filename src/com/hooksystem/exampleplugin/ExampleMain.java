@@ -51,7 +51,7 @@ public class ExampleMain extends JavaPlugin
 
 		//2: Display the online players' groups
 		Map<String, List<Player>> playersGroups = Bukkit.getOnlinePlayers().stream()
-				.collect(groupingBy(player -> this.permissionsManager.getPlayerGroup(player.getUniqueId())));
+				.collect(groupingBy(player -> this.permissionsManager.getPlayerGroupName(player.getUniqueId())));
 
 		playersGroups.forEach((groupName, players) ->
 		{
