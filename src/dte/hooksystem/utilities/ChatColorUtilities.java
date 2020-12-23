@@ -11,6 +11,9 @@ import org.bukkit.ChatColor;
 //TODO: make it possible to escape colors with a slash before them
 public class ChatColorUtilities 
 {
+	//Container of static methods
+	private ChatColorUtilities(){}
+	
 	private static final Map<String, ChatColor> COLOR_BY_NAME = Arrays.stream(ChatColor.values())
 			.collect(toMap(ChatColor::name, Function.identity()));
 	

@@ -38,7 +38,7 @@ public class NotifyOperatorsHandler extends MessagerHandler
 	}
 
 	@Override
-	public void logMessage(String message) 
+	public void sendMessage(String message) 
 	{
 		ONLINE_OPERATORS.forEach(player -> player.sendMessage(message));
 	}

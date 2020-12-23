@@ -17,7 +17,7 @@ public class LoggerMessageHandler extends MessagerHandler
 	}
 	
 	@Override
-	public void logMessage(String message) 
+	public void sendMessage(String message) 
 	{
 		this.logger.log(this.logLevel, message);
 	}

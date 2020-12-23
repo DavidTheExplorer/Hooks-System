@@ -23,7 +23,7 @@ public abstract class MessagerHandler implements PluginAbsenceHandler, CopyableH
 	{
 		String[] finalMessages = createMessagesFor(failedHook);
 		
-		Arrays.stream(finalMessages).forEach(this::logMessage);
+		Arrays.stream(finalMessages).forEach(this::sendMessage);
 	}
 	protected String[] createMessagesFor(PluginHook failedHook) 
 	{
@@ -31,7 +31,7 @@ public abstract class MessagerHandler implements PluginAbsenceHandler, CopyableH
 				.map(message -> injectHookInfo(message, failedHook))
 				.toArray(String[]::new);
 	}
-	public abstract void logMessage(String message);
+	public abstract void sendMessage(String message);
 	
 	
 	/*

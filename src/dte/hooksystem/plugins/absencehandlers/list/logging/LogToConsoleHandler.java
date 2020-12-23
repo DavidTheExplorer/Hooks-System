@@ -10,7 +10,7 @@ public class LogToConsoleHandler extends MessagerHandler
 	}
 	
 	@Override
-	public void logMessage(String message) 
+	public void sendMessage(String message) 
 	{
 		Bukkit.getConsoleSender().sendMessage(message);
 	}
