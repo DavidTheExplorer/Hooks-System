@@ -1,5 +1,5 @@
 name: HookSystem
-main: dte.hooksystem.exampleplugin.ExampleMain
+main: dte.hooksystem.serverplugin.Main
 version: 1.0
-description: Efficiently hook to other plugins.
+description: Easily and Efficiently Hook to other Plugins on the server.
 author: DavidTheExplorer

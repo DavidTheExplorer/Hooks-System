@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.hooks.listeners.HookListener;
+import dte.hooksystem.utilities.ChatColorUtilities;
 
 public class Main extends JavaPlugin implements HookListener
 {
@@ -24,7 +25,9 @@ public class Main extends JavaPlugin implements HookListener
 	@Override
 	public void onHook(Plugin owningPlugin, PluginHook hook) 
 	{
-		logToConsole(String.format("[HookSystem] %s has successfully hooked to %s!", owningPlugin.getName(), hook.getPluginName()));
+		String hookMessage = String.format("[HookSystem] GREEN+%s GRAY+has successfully hooked to AQUA+%sGRAY+!", owningPlugin.getName(), hook.getPluginName());
+
+		logToConsole(ChatColorUtilities.colorizeLiterals(hookMessage));
 	}
 	private void logToConsole(String message) 
 	{
