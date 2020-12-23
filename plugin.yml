@@ -1,4 +1,5 @@
-name: HooksSystem
-main: com.hooksystem.exampleplugin.ExampleMain
-softdepend: [LuckPerms, WorldGuard]
+name: HookSystem
+main: dte.hooksystem.exampleplugin.ExampleMain
 version: 1.0
+description: Efficiently hook to other plugins.
+author: DavidTheExplorer
