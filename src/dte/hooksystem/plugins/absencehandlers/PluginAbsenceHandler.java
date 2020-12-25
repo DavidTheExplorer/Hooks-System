@@ -2,6 +2,7 @@ package dte.hooksystem.plugins.absencehandlers;
 
 import dte.hooksystem.hooks.PluginHook;
 
+@FunctionalInterface
 public interface PluginAbsenceHandler
 {
 	/**
