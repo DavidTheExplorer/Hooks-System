@@ -1,4 +1,4 @@
-package dte.hooksystem.utilities;
+package dte.hooksystem.utils;
 
 import java.util.Arrays;
 import java.util.Iterator;

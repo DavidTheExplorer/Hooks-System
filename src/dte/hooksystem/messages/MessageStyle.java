@@ -1,6 +1,6 @@
 package dte.hooksystem.messages;
 
-import static dte.hooksystem.utilities.ObjectsUtilities.ifNotNull;
+import static dte.hooksystem.utils.ObjectsUtils.ifNotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +19,8 @@ public class MessageStyle
 
 	//this instance always returns the given raw message
 	public static final MessageStyle RAW = new MessageStyle();
-
+	
+	public MessageStyle(){}
 	public static MessageStyle copyOf(MessageStyle style) 
 	{
 		MessageStyle copy = new MessageStyle();
@@ -57,7 +58,7 @@ public class MessageStyle
 
 		String messageInjected = String.format(this.template, rawMessage);
 
-		return addFinalTouches(messageInjected);
+		return applyFinalTouches(messageInjected);
 	}
 	public String[] apply(String[] rawMessages) 
 	{
@@ -69,7 +70,6 @@ public class MessageStyle
 	{
 		return this.finalTouches;
 	}
-
 
 	private String createTemplate() 
 	{
@@ -86,7 +86,7 @@ public class MessageStyle
 
 		return template.toString();
 	}
-	private String addFinalTouches(String text) 
+	private String applyFinalTouches(String text) 
 	{
 		for(UnaryOperator<String> touch : this.finalTouches) 
 		{

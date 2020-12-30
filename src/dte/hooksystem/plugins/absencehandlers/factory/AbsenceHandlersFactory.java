@@ -20,7 +20,7 @@ import dte.hooksystem.plugins.absencehandlers.list.DoNothingHandler;
 import dte.hooksystem.plugins.absencehandlers.list.logging.LogToConsoleHandler;
 import dte.hooksystem.plugins.absencehandlers.list.logging.LoggerMessageHandler;
 import dte.hooksystem.plugins.absencehandlers.list.logging.NotifyOperatorsHandler;
-import dte.hooksystem.utilities.ArrayUtilities;
+import dte.hooksystem.utils.ArrayUtils;
 
 public class AbsenceHandlersFactory
 {
@@ -90,7 +90,7 @@ public class AbsenceHandlersFactory
 	}
 	private static PluginAbsenceHandler beforeDisabling(Plugin plugin, PluginAbsenceHandler... handlers)
 	{
-		return handleOrdered(ArrayUtilities.addTo(handlers, disablePlugin(plugin)));
+		return handleOrdered(ArrayUtils.addTo(handlers, disablePlugin(plugin)));
 	}
 
 

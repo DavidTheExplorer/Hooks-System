@@ -1,11 +1,11 @@
-package dte.hooksystem.utilities;
+package dte.hooksystem.utils;
 
 import java.util.function.Consumer;
 
-public class ObjectsUtilities 
+public class ObjectsUtils
 {
 	//Container of static methods
-	private ObjectsUtilities(){}
+	private ObjectsUtils(){}
 	
 	public static <T> T getOrDefault(T object, T defaultValue) 
 	{

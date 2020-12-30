@@ -1,9 +1,9 @@
-package dte.hooksystem.utilities;
+package dte.hooksystem.utils;
 
-public class ArrayUtilities
+public class ArrayUtils
 {
 	//Container of static methods
-	private ArrayUtilities(){}
+	private ArrayUtils(){}
 
 	@SuppressWarnings("unchecked")
 	public static <T> T[] addTo(T[] array, T... elements)

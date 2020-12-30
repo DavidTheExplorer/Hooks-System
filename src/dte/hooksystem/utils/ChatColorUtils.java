@@ -1,12 +1,12 @@
-package dte.hooksystem.utilities;
+package dte.hooksystem.utils;
 
 import org.bukkit.ChatColor;
 
 //TODO: allow to escape colors with a slash before them
-public class ChatColorUtilities 
+public class ChatColorUtils
 {
 	//Container of static methods
-	private ChatColorUtilities(){}
+	private ChatColorUtils(){}
 	
 	public static String colorizeLiterals(String text) 
 	{
