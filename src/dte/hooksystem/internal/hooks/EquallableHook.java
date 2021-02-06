@@ -7,18 +7,18 @@ import dte.hooksystem.hooks.PluginHook;
 
 public class EquallableHook extends HookDecorator
 {
-	public EquallableHook(PluginHook hook) 
+	private EquallableHook(PluginHook hook) 
 	{
 		super(hook);
 	}
-	public PluginHook getSourceHook() 
-	{
-		return this.hook;
-	}
-	
 	public static PluginHook of(PluginHook hook) 
 	{
 		return hook instanceof AbstractPluginHook ? hook : new EquallableHook(hook);
+	}
+	
+	public PluginHook getSourceHook() 
+	{
+		return this.hook;
 	}
 	
 	@Override

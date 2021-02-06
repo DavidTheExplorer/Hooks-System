@@ -8,7 +8,7 @@ import dte.hooksystem.hooks.AbstractPluginHook;
 import me.lucko.luckperms.LuckPerms;
 import me.lucko.luckperms.api.LuckPermsApi;
 
-public class LuckPermsHook extends AbstractPluginHook implements PermissionsManagerProvider
+public class LuckPermsHook extends AbstractPluginHook implements PermissionsManagerHook
 {
 	private LuckPermsApi luckPerms;
 	private LuckPermsPermissionsManager permissionsManager;

@@ -2,16 +2,19 @@ package dte.hooksystem.utils;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class Iterators 
 {
 	//Container of static methods
 	private Iterators(){}
-
+	
 	public static <T> void loop(T[] array, Consumer<T> action, Consumer<T> untilLastIteration) 
 	{
-		loop(Arrays.asList(array), action, untilLastIteration);
+		List<T> list = Arrays.asList(array);
+		
+		loop(list, action, untilLastIteration);
 	}
 	public static <T> void loop(Iterable<T> iterable, Consumer<T> action, Consumer<T> untilLastIteration)
 	{

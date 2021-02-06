@@ -1,8 +1,6 @@
-package dte.hooksystem.hooks.listeners;
+package dte.hooksystem.hooks;
 
 import org.bukkit.plugin.Plugin;
-
-import dte.hooksystem.hooks.PluginHook;
 
 public interface HookListener 
 {

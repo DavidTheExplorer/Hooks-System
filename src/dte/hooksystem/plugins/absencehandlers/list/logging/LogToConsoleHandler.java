@@ -4,11 +4,6 @@ import org.bukkit.Bukkit;
 
 public class LogToConsoleHandler extends MessagerHandler
 {
-	public LogToConsoleHandler(String[] messages)
-	{
-		super(messages);
-	}
-	
 	@Override
 	public void sendMessage(String message) 
 	{
@@ -18,6 +13,6 @@ public class LogToConsoleHandler extends MessagerHandler
 	@Override
 	public MessagerHandler copy() 
 	{
-		return new LogToConsoleHandler(getCopiedMessages());
+		return copyMessagesTo(LogToConsoleHandler::new);
 	}
 }

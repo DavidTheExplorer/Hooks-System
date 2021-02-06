@@ -8,10 +8,8 @@ public class LoggerMessageHandler extends MessagerHandler
 	private final Logger logger;
 	private final Level logLevel;
 	
-	public LoggerMessageHandler(Logger logger, Level logLevel, String[] messages)
+	public LoggerMessageHandler(Logger logger, Level logLevel)
 	{
-		super(messages);
-		
 		this.logger = logger;
 		this.logLevel = logLevel;
 	}
@@ -25,6 +23,6 @@ public class LoggerMessageHandler extends MessagerHandler
 	@Override
 	public MessagerHandler copy() 
 	{
-		return new LoggerMessageHandler(this.logger, this.logLevel, getCopiedMessages());
+		return copyMessagesTo(() -> new LoggerMessageHandler(this.logger, this.logLevel));
 	}
 }

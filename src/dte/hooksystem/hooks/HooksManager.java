@@ -18,7 +18,6 @@ import com.google.common.collect.Sets;
 
 import dte.hooksystem.exceptions.HookInitException;
 import dte.hooksystem.exceptions.PluginAlreadyHookedException;
-import dte.hooksystem.hooks.listeners.HookListener;
 import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
 import dte.hooksystem.plugins.absencehandlers.factory.AbsenceHandlersFactory;
 import dte.hooksystem.serverplugin.Main;
@@ -36,10 +35,6 @@ public class HooksManager
 		this.owningPlugin = Objects.requireNonNull(owningPlugin);
 		this.hookListeners = Sets.newHashSet(Main.getInstance());
 	}
-
-	/*
-	 * Hooks Retrieval
-	 */
 
 	/**
 	 * Finds the registered instance of the given hook class. 
@@ -99,10 +94,6 @@ public class HooksManager
 		return Optional.empty();
 	}
 
-	/*
-	 * Hooks Registration
-	 */
-
 	/**
 	 * Sets the default handler to run when a hook cannot be registered because the hook's plugin is not on the server.
 	 * 
@@ -112,7 +103,7 @@ public class HooksManager
 	{
 		this.pluginAbsenceHandler = Objects.requireNonNull(handler);
 	}
-	public HookProcess startHookingTo(PluginHook... hooks)
+	public HookProcess process(PluginHook... hooks)
 	{
 		return new HookProcess(Objects.requireNonNull(hooks));
 	}
@@ -146,18 +137,16 @@ public class HooksManager
 	private void unsafeHook(PluginHook hook)
 	{
 		this.hookByClass.put(hook.getClass(), hook);
-
-		//notify the hook listeners
 		this.hookListeners.forEach(listener -> listener.onHook(this.owningPlugin, hook));
 	}
-
-	/*
-	 * General
-	 */
 	public boolean isHookedTo(String pluginName) 
 	{
 		return this.hookByClass.values().stream()
 				.anyMatch(hook -> hook.getPluginName().equals(pluginName));
+	}
+	public boolean isHooked(Class<? extends PluginHook> hookClass) 
+	{
+		return this.hookByClass.containsKey(hookClass);
 	}
 	public int hooksAmount()
 	{
@@ -192,7 +181,7 @@ public class HooksManager
 			this.required = true;
 			return this;
 		}
-		public HookProcess optional()
+		public HookProcess softdepend()
 		{
 			this.required = false;
 			return this;
@@ -200,7 +189,7 @@ public class HooksManager
 		public HookProcess ifPluginAbsent(PluginAbsenceHandler handler)
 		{
 			Objects.requireNonNull(handler);
-			
+
 			if(this.required)
 				//if the hooks are required, the provided handler will run before before the plugin is disabled
 				this.pluginAbsenceHandler = AbsenceHandlersFactory.handleOrdered(handler, disablePlugin(HooksManager.this.owningPlugin));

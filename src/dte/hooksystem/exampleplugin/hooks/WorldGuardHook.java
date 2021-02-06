@@ -26,7 +26,7 @@ public class WorldGuardHook extends AbstractPluginHook
 	}
 	
 	@Override
-	public void init() 
+	public void init()
 	{
 		this.regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
 	}

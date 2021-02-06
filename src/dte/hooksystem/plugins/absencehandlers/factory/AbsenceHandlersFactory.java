@@ -19,17 +19,15 @@ import dte.hooksystem.plugins.absencehandlers.list.DisablePluginHandler;
 import dte.hooksystem.plugins.absencehandlers.list.DoNothingHandler;
 import dte.hooksystem.plugins.absencehandlers.list.logging.LogToConsoleHandler;
 import dte.hooksystem.plugins.absencehandlers.list.logging.LoggerMessageHandler;
-import dte.hooksystem.plugins.absencehandlers.list.logging.NotifyOperatorsHandler;
-import dte.hooksystem.utils.ArrayUtils;
 
 public class AbsenceHandlersFactory
 {
 	//Container of static factory methods
 	private AbsenceHandlersFactory(){}
-
+	
 	//Cached Stateless Handlers
 	public static final PluginAbsenceHandler DO_NOTHING = new DoNothingHandler();
-
+	
 	/*
 	 * Console
 	 */
@@ -40,8 +38,11 @@ public class AbsenceHandlersFactory
 	public static PluginAbsenceHandler logToConsole(MessageStyle style, String... messages) 
 	{
 		String[] styledMessages = style.apply(messages);
+		
+		LogToConsoleHandler handler = new LogToConsoleHandler();
+		handler.addMessages(styledMessages);
 
-		return new LogToConsoleHandler(styledMessages);
+		return handler;
 	}
 	public static PluginAbsenceHandler logErrorToConsole(String... messages) 
 	{
@@ -55,7 +56,7 @@ public class AbsenceHandlersFactory
 	{
 		//"Error" means that the messages become red
 		MessageStyle redStyle = style.withFinalTouch(message -> ChatColor.RED + message);
-		
+
 		return logToConsole(redStyle, messages);
 	}
 
@@ -65,8 +66,11 @@ public class AbsenceHandlersFactory
 	public static PluginAbsenceHandler log(Logger logger, Level logLevel, MessageStyle style, String... messages) 
 	{
 		String[] styledMessages = style.apply(messages);
-
-		return new LoggerMessageHandler(logger, logLevel, styledMessages);
+		
+		LoggerMessageHandler handler = new LoggerMessageHandler(logger, logLevel);
+		handler.addMessages(styledMessages);
+		
+		return handler;
 	}
 	public static PluginAbsenceHandler log(Logger logger, Level logLevel, String... messages) 
 	{
@@ -79,18 +83,6 @@ public class AbsenceHandlersFactory
 	public static PluginAbsenceHandler disablePlugin(Plugin plugin) 
 	{
 		return new DisablePluginHandler(plugin);
-	}
-	public static PluginAbsenceHandler runThenDisable(Plugin plugin, Consumer<PluginHook> action) 
-	{
-		return beforeDisabling(plugin, new ActionHandler(action));
-	}
-	public static PluginAbsenceHandler notifyOperatorsThenDisable(Plugin plugin, String... messages) 
-	{
-		return beforeDisabling(plugin, new NotifyOperatorsHandler(messages));
-	}
-	private static PluginAbsenceHandler beforeDisabling(Plugin plugin, PluginAbsenceHandler... handlers)
-	{
-		return handleOrdered(ArrayUtils.addTo(handlers, disablePlugin(plugin)));
 	}
 
 
@@ -110,10 +102,8 @@ public class AbsenceHandlersFactory
 	{
 		public static MessageStyle withPluginPrefix(Plugin plugin) 
 		{
-			String pluginName = plugin.getName();
-			
 			return new MessageStyle()
-					.prefixedWith(String.format("[%s]", pluginName));
+					.prefixedWith(String.format("[%s]", plugin.getName()));
 		}
 	}
 }

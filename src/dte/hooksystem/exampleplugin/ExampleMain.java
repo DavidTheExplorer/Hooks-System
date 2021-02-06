@@ -16,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import dte.hooksystem.exampleplugin.hooks.WorldGuardHook;
 import dte.hooksystem.exampleplugin.hooks.permissionmanagers.LuckPermsHook;
-import dte.hooksystem.exampleplugin.hooks.permissionmanagers.PermissionsManagerProvider;
+import dte.hooksystem.exampleplugin.hooks.permissionmanagers.PermissionsManagerHook;
 import dte.hooksystem.exampleplugin.listeners.DisplayGroupListeners;
 import dte.hooksystem.exampleplugin.listeners.DisplayRegionListeners;
 import dte.hooksystem.exampleplugin.permissions.LocalPermissionsManager;
@@ -34,8 +34,8 @@ public class ExampleMain extends JavaPlugin
 		this.hooksManager = new HooksManager(this);
 
 		//Register the hooks for WorldGuard and LuckPerms [Suggestion: always static import logToConsole() and withPluginPrefix()]
-		this.hooksManager.startHookingTo(new WorldGuardHook(), new LuckPermsHook())
-		.optional()
+		this.hooksManager.process(new WorldGuardHook(), new LuckPermsHook())
+		.softdepend()
 		.ifPluginAbsent(logErrorToConsole(withPluginPrefix(this), "%plugin wasn't found on this server!", "will not use any functionality of it."))
 		.hook();
 
@@ -55,8 +55,7 @@ public class ExampleMain extends JavaPlugin
 		PluginManager pm = Bukkit.getPluginManager();
 
 		pm.registerEvents(new DisplayGroupListeners(this.permissionsManager), this);
-		hooksManager.findHook(WorldGuardHook.class).ifPresent(worldGuardHook -> pm.registerEvents(new DisplayRegionListeners(worldGuardHook), this));
-		System.out.println("Hello! x2");
+		this.hooksManager.findHook(WorldGuardHook.class).ifPresent(wgHook -> pm.registerEvents(new DisplayRegionListeners(wgHook), this));
 	}
 	public PermissionsManager getPermissionsManager()
 	{	
@@ -66,12 +65,12 @@ public class ExampleMain extends JavaPlugin
 	{
 		//Example of the extensibility of the Library: Using an interface for Permissions Managers plugins such as PermissionsEX and GroupManager
 		return this.hooksManager
-				.findHookOf(PermissionsManagerProvider.class, () -> 
+				.findHookOf(PermissionsManagerHook.class, () -> 
 				{
 					Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "CONFLICT: More than one Permissions Manager detected! Closing the plugin...");
 					Bukkit.getPluginManager().disablePlugin(this);
 				})
-				.map(PermissionsManagerProvider::getPermissionsManager);
+				.map(PermissionsManagerHook::getPermissionsManager);
 	}
 	private void displayGroup(String groupName, List<? extends Player> players) 
 	{

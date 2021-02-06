@@ -15,7 +15,7 @@ public class AbsenceHandlersUtilities
 	{
 		if(classz.isInstance(handler))
 			return true;
-
+		
 		if(handler instanceof CompositeHandler) 
 		{
 			CompositeHandler compositeHandler = (CompositeHandler) handler;

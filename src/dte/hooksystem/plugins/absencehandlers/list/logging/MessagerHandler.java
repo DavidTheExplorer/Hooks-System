@@ -1,21 +1,20 @@
 package dte.hooksystem.plugins.absencehandlers.list.logging;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.google.common.collect.Lists;
+import java.util.function.Supplier;
 
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
-import dte.hooksystem.plugins.absencehandlers.copyable.CopyableHandler;
 
-public abstract class MessagerHandler implements PluginAbsenceHandler, CopyableHandler<MessagerHandler>
+public abstract class MessagerHandler implements PluginAbsenceHandler
 {
-	private final List<String> templateMessages;
-
-	public MessagerHandler(String[] messages) 
+	private final List<String> templateMessages = new ArrayList<>();
+	
+	public void addMessages(String... message) 
 	{
-		this.templateMessages = Lists.newArrayList(messages);
+		this.templateMessages.addAll(Arrays.asList(message));
 	}
 	
 	@Override
@@ -31,16 +30,15 @@ public abstract class MessagerHandler implements PluginAbsenceHandler, CopyableH
 				.map(message -> injectHookInfo(message, failedHook))
 				.toArray(String[]::new);
 	}
-	public abstract void sendMessage(String message);
-	
-	
-	/*
-	 * Copy Utilities
-	 */
-	protected String[] getCopiedMessages() 
+	protected MessagerHandler copyMessagesTo(Supplier<? extends MessagerHandler> supplier)
 	{
-		return this.templateMessages.toArray(new String[this.templateMessages.size()]);
+		MessagerHandler handler = supplier.get();
+		
+		this.templateMessages.forEach(handler::addMessages);
+		
+		return handler;
 	}
+	public abstract void sendMessage(String message);
 	
 	
 	private String injectHookInfo(String text, PluginHook failedHook) 
