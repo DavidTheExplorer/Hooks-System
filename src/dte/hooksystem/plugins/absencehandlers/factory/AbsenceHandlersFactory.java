@@ -2,6 +2,7 @@ package dte.hooksystem.plugins.absencehandlers.factory;
 
 import static dte.hooksystem.messages.MessageStyle.RAW;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +38,7 @@ public class AbsenceHandlersFactory
 	}
 	public static PluginAbsenceHandler logToConsole(MessageStyle style, String... messages) 
 	{
-		String[] styledMessages = style.apply(messages);
+		String[] styledMessages = style.apply(Arrays.asList(messages));
 		
 		LogToConsoleHandler handler = new LogToConsoleHandler();
 		handler.addMessages(styledMessages);
@@ -65,7 +66,7 @@ public class AbsenceHandlersFactory
 	 */
 	public static PluginAbsenceHandler log(Logger logger, Level logLevel, MessageStyle style, String... messages) 
 	{
-		String[] styledMessages = style.apply(messages);
+		String[] styledMessages = style.apply(Arrays.asList(messages));
 		
 		LoggerMessageHandler handler = new LoggerMessageHandler(logger, logLevel);
 		handler.addMessages(styledMessages);
