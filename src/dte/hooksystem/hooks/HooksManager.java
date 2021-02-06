@@ -200,10 +200,8 @@ public class HooksManager
 		}
 		public void hook()
 		{
-			for(PluginHook hook : this.hooksToRegister) 
-			{
+			for(PluginHook hook : this.hooksToRegister)
 				registerHook(hook, this);
-			}
 		}
 	}
 }

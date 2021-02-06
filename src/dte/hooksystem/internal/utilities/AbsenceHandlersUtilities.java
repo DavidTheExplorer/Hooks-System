@@ -46,9 +46,7 @@ public class AbsenceHandlersUtilities
 			CompositeHandler compositeHandler = (CompositeHandler) handler;
 
 			for(PluginAbsenceHandler encapsulatedHandler : compositeHandler) 
-			{
 				addClassHandlers(encapsulatedHandler, hookClass, handlersList);
-			}
 		}
 	}
 }
