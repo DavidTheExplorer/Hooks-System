@@ -18,15 +18,12 @@ public class ArrayUtils
 		
 		//insert the first array's elements
 		for(int i = 0; i < array1.length; i++)
-		{
 			result[i] = array1[i];
-		}
 		
 		//insert the second array's elements
 		for(int i = 0; i < array2.length; i++) 
-		{
 			result[array1.length + i] = array2[i];
-		}
+		
 		return result;
 	}
 }
