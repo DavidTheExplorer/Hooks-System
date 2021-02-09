@@ -26,12 +26,6 @@ public class HookDecorator implements PluginHook
 	{
 		return this.hook.getPlugin();
 	}
-
-	@Override
-	public boolean isPresent() 
-	{
-		return this.hook.isPresent();
-	}
 	
 	@Override
 	public void init() throws Exception
