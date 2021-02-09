@@ -10,4 +10,10 @@ public class DoNothingHandler implements PluginAbsenceHandler
 	{
 		
 	}
+
+	@Override
+	public PluginAbsenceHandler copy() 
+	{
+		return new DoNothingHandler();
+	}
 }

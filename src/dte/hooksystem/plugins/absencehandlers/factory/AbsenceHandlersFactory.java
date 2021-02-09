@@ -1,6 +1,6 @@
 package dte.hooksystem.plugins.absencehandlers.factory;
 
-import static dte.hooksystem.messages.MessageStyle.RAW;
+import static dte.hooksystem.messagestyle.MessageStyle.RAW;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -11,7 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.messages.MessageStyle;
+import dte.hooksystem.messagestyle.MessageStyle;
 import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
 import dte.hooksystem.plugins.absencehandlers.composite.CompositeHandler;
 import dte.hooksystem.plugins.absencehandlers.composite.CompositeHandlerOptions;
@@ -20,6 +20,7 @@ import dte.hooksystem.plugins.absencehandlers.list.DisablePluginHandler;
 import dte.hooksystem.plugins.absencehandlers.list.DoNothingHandler;
 import dte.hooksystem.plugins.absencehandlers.list.logging.LogToConsoleHandler;
 import dte.hooksystem.plugins.absencehandlers.list.logging.LoggerMessageHandler;
+import dte.hooksystem.plugins.absencehandlers.list.logging.MessagerHandler;
 
 public class AbsenceHandlersFactory
 {
@@ -38,10 +39,8 @@ public class AbsenceHandlersFactory
 	}
 	public static PluginAbsenceHandler logToConsole(MessageStyle style, String... messages) 
 	{
-		String[] styledMessages = style.apply(Arrays.asList(messages));
-		
 		LogToConsoleHandler handler = new LogToConsoleHandler();
-		handler.addMessages(styledMessages);
+		addStyledMessages(handler, style, messages);
 
 		return handler;
 	}
@@ -66,10 +65,8 @@ public class AbsenceHandlersFactory
 	 */
 	public static PluginAbsenceHandler log(Logger logger, Level logLevel, MessageStyle style, String... messages) 
 	{
-		String[] styledMessages = style.apply(Arrays.asList(messages));
-		
 		LoggerMessageHandler handler = new LoggerMessageHandler(logger, logLevel);
-		handler.addMessages(styledMessages);
+		addStyledMessages(handler, style, messages);
 		
 		return handler;
 	}
@@ -97,6 +94,13 @@ public class AbsenceHandlersFactory
 	public static PluginAbsenceHandler run(Consumer<PluginHook> action)
 	{
 		return new ActionHandler(action);
+	}
+	
+	private static void addStyledMessages(MessagerHandler handler, MessageStyle style, String[] messages) 
+	{
+		String[] styledMessages = style.apply(Arrays.asList(messages));
+		
+		handler.addMessages(styledMessages);
 	}
 	
 	public static class MessageStylesFactory 

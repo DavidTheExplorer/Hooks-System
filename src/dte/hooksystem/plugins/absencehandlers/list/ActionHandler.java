@@ -19,4 +19,10 @@ public class ActionHandler implements PluginAbsenceHandler
 	{
 		this.action.accept(failedHook);
 	}
+	
+	@Override
+	public PluginAbsenceHandler copy() 
+	{
+		return new ActionHandler(this.action);
+	}
 }

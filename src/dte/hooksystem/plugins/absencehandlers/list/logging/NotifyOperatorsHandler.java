@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.serverplugin.Main;
+import dte.hooksystem.serverplugin.HookSystem;
 
 public class NotifyOperatorsHandler extends MessagerHandler
 {
@@ -28,7 +28,7 @@ public class NotifyOperatorsHandler extends MessagerHandler
 				.map(OfflinePlayer::getPlayer)
 				.collect(toSet());
 		
-		Bukkit.getPluginManager().registerEvents(new OperatorsUpdateListeners(), Main.getInstance());
+		Bukkit.getPluginManager().registerEvents(new OperatorsUpdateListeners(), HookSystem.getInstance());
 	}
 
 	@Override
@@ -46,9 +46,9 @@ public class NotifyOperatorsHandler extends MessagerHandler
 	}
 
 	@Override
-	public MessagerHandler copy() 
+	public MessagerHandler copy()
 	{
-		return copyMessagesTo(NotifyOperatorsHandler::new);
+		return copyTo(NotifyOperatorsHandler::new);
 	}
 
 	private static class OperatorsUpdateListeners implements Listener
