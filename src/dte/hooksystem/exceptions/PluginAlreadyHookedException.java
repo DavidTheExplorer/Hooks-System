@@ -1,6 +1,5 @@
 package dte.hooksystem.exceptions;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -12,11 +11,11 @@ public class PluginAlreadyHookedException extends HookException
 	
 	private static final long serialVersionUID = -8548600593534415155L;
 	
-	public PluginAlreadyHookedException(String pluginName)
+	public PluginAlreadyHookedException(Plugin plugin)
 	{
-		super(pluginName, "Tried to register a hook for the %plugin plugin but one already exists!");
+		super(plugin.getName(), "Tried to register a hook for the %plugin plugin but one already exists!");
 		
-		this.plugin = Bukkit.getPluginManager().getPlugin(pluginName);
+		this.plugin = plugin;
 	}
 	public Plugin getPlugin() 
 	{

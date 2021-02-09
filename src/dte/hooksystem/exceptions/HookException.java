@@ -1,7 +1,7 @@
 package dte.hooksystem.exceptions;
 
 /**
- * Thrown to indicate that there was a problem during the hook process to a certain plugin on the server.
+ * Thrown to indicate a problem during the hook process to a certain plugin on the server.
  */
 public class HookException extends RuntimeException
 {
