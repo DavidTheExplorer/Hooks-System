@@ -2,15 +2,15 @@ package dte.hooksystem.exampleplugin.permissions;
 
 import java.util.UUID;
 
-import dte.hooksystem.exampleplugin.hooks.permissionmanagers.LuckPermsHook;
+import me.lucko.luckperms.api.LuckPermsApi;
 
 public class LuckPermsPermissionsManager implements PermissionsManager
 {
-	private final LuckPermsHook luckPermsHook;
+	private final LuckPermsApi luckPermsAPI;
 	
-	public LuckPermsPermissionsManager(LuckPermsHook luckPermsHook) 
+	public LuckPermsPermissionsManager(LuckPermsApi luckPerms) 
 	{
-		this.luckPermsHook = luckPermsHook;
+		this.luckPermsAPI = luckPerms;
 	}
 	
 	@Override
@@ -22,12 +22,12 @@ public class LuckPermsPermissionsManager implements PermissionsManager
 	@Override
 	public String getPlayerGroupName(UUID playerUUID) 
 	{
-		return this.luckPermsHook.getPlayerGroupName(playerUUID);
+		return this.luckPermsAPI.getUserManager().getUser(playerUUID).getPrimaryGroup();
 	}
 
 	@Override
 	public boolean groupExists(String groupName) 
 	{
-		return this.luckPermsHook.groupExists(groupName);
+		return this.luckPermsAPI.getGroup(groupName) != null;
 	}
 }
