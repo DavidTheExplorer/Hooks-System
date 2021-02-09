@@ -1,5 +1,9 @@
 package dte.hooksystem.utils;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.function.Supplier;
+
 public class ArrayUtils
 {
 	//Container of static methods
@@ -25,5 +29,17 @@ public class ArrayUtils
 			result[array1.length + i] = array2[i];
 		
 		return result;
+	}
+	
+	public static <T> Iterable<T> toIterable(T[] array)
+	{
+		return Arrays.asList(array);
+	}
+	public static <T, C extends Collection<T>> C toCollection(T[] array, Supplier<C> baseSupplier)
+	{
+		C collection = baseSupplier.get();
+		collection.addAll(Arrays.asList(array));
+		
+		return collection;
 	}
 }
