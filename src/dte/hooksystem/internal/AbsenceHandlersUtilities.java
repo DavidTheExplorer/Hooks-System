@@ -1,4 +1,4 @@
-package dte.hooksystem.internal.utilities;
+package dte.hooksystem.internal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,8 @@ public class AbsenceHandlersUtilities
 			CompositeHandler compositeHandler = (CompositeHandler) handler;
 			
 			//recursively search through the composite for an handler that is an instance of the provided class
-			return compositeHandler.getHandlersView(false).stream().anyMatch(encapsulatedHandler -> isInstance(encapsulatedHandler, classz));
+			return compositeHandler.getHandlersView(false).stream()
+					.anyMatch(encapsulatedHandler -> isInstance(encapsulatedHandler, classz));
 		}
 		return false;
 	}
@@ -48,5 +49,10 @@ public class AbsenceHandlersUtilities
 			for(PluginAbsenceHandler encapsulatedHandler : compositeHandler) 
 				addClassHandlers(encapsulatedHandler, hookClass, handlersList);
 		}
+	}
+	
+	public static Runnable toRunnable(PluginAbsenceHandler handler) 
+	{
+		return () -> handler.handle(null);
 	}
 }

@@ -1,4 +1,4 @@
-package dte.hooksystem.internal.hooks;
+package dte.hooksystem.internal;
 
 import java.util.Optional;
 
