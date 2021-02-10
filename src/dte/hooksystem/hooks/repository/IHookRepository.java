@@ -9,6 +9,7 @@ import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.hooks.PluginHook;
 
+//TODO: add this method: <T> List<T> supply(Class<? extends Supplier<T>> supplierClass);
 public interface IHookRepository
 {
 	/**

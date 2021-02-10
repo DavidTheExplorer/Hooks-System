@@ -9,7 +9,7 @@ import dte.hooksystem.hooks.service.IHookService;
 import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
 import dte.hooksystem.plugins.absencehandlers.factory.AbsenceHandlersFactory;
 
-//TODO: Add in the dosc that although hooks are required by default, It's recommended to call the required() method to avoid unexpected behavior.
+//TODO: Add in the repo's desc that although hooks are required by default, It's recommended to call the required() method to avoid unexpected behavior.
 //And that a required hook means the plugin will disable itself if the hook is not present.
 public class HookProcess
 {
