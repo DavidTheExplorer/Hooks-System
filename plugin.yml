@@ -1,5 +1,5 @@
 name: HookSystem
-main: dte.hooksystem.serverplugin.Main
+main: dte.hooksystem.serverplugin.HookSystem
 version: 1.0
 description: Easily and Efficiently Hook to other Plugins on the server.
 author: DavidTheExplorer

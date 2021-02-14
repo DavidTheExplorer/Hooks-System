@@ -2,26 +2,27 @@ package dte.hooksystem.exampleplugin.hooks.permissionmanagers;
 
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 import dte.hooksystem.exampleplugin.permissions.LuckPermsPermissionsManager;
 import dte.hooksystem.exampleplugin.permissions.PermissionsManager;
-import dte.hooksystem.hooks.AbstractPluginHook;
-import me.lucko.luckperms.LuckPerms;
-import me.lucko.luckperms.api.LuckPermsApi;
+import dte.hooksystem.hooks.ServicedHook;
+import net.luckperms.api.LuckPerms;
 
-public class LuckPermsHook extends AbstractPluginHook implements PermissionsManagerHook
+public class LuckPermsHook extends ServicedHook<LuckPerms> implements PermissionsManagerHook
 {
-	private LuckPermsApi luckPerms;
 	private LuckPermsPermissionsManager permissionsManager;
 	
 	public LuckPermsHook()
 	{
-		super("LuckPerms");
+		super("LuckPerms", LuckPerms.class);
 	}
 	
 	@Override
-	public void init() throws Exception 
+	public void init() throws Exception
 	{
-		this.luckPerms = LuckPerms.getApi();
+		super.init();
 		this.permissionsManager = new LuckPermsPermissionsManager(this);
 	}
 	
@@ -30,12 +31,18 @@ public class LuckPermsHook extends AbstractPluginHook implements PermissionsMana
 	{
 		return this.permissionsManager;
 	}
+	
 	public String getPlayerGroupName(UUID playerUUID) 
 	{
-		return this.luckPerms.getUserManager().getUser(playerUUID).getPrimaryGroup();
+		Player player = Bukkit.getPlayer(playerUUID);
+
+		if(player != null)
+			return this.serviced.getPlayerAdapter(Player.class).getUser(player).getPrimaryGroup();
+		else
+			return this.serviced.getUserManager().loadUser(playerUUID).join().getPrimaryGroup();
 	}
 	public boolean groupExists(String groupName) 
 	{
-		return this.luckPerms.getGroup(groupName) != null;
+		return this.serviced.getGroupManager().getGroup(groupName) != null;
 	}
 }

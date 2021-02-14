@@ -20,4 +20,10 @@ public class DisablePluginHandler implements PluginAbsenceHandler
 	{
 		Bukkit.getPluginManager().disablePlugin(this.plugin);
 	}
+
+	@Override
+	public PluginAbsenceHandler copy()
+	{
+		return new DisablePluginHandler(this.plugin);
+	}
 }

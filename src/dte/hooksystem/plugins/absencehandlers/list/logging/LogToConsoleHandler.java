@@ -13,6 +13,6 @@ public class LogToConsoleHandler extends MessagerHandler
 	@Override
 	public MessagerHandler copy() 
 	{
-		return copyMessagesTo(LogToConsoleHandler::new);
+		return copyTo(LogToConsoleHandler::new);
 	}
 }

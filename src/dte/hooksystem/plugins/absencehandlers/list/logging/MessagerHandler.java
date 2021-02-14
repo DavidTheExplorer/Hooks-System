@@ -30,9 +30,9 @@ public abstract class MessagerHandler implements PluginAbsenceHandler
 				.map(message -> injectHookInfo(message, failedHook))
 				.toArray(String[]::new);
 	}
-	protected MessagerHandler copyMessagesTo(Supplier<? extends MessagerHandler> supplier)
+	protected MessagerHandler copyTo(Supplier<? extends MessagerHandler> baseSupplier)
 	{
-		MessagerHandler handler = supplier.get();
+		MessagerHandler handler = baseSupplier.get();
 		
 		this.templateMessages.forEach(handler::addMessages);
 		

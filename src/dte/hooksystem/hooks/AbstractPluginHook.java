@@ -26,7 +26,7 @@ public abstract class AbstractPluginHook implements PluginHook
 		this.pluginName = pluginName;
 		this.plugin = Bukkit.getPluginManager().getPlugin(pluginName);
 	}
-	
+
 	@Override
 	public String getPluginName()
 	{
@@ -37,12 +37,6 @@ public abstract class AbstractPluginHook implements PluginHook
 	public Optional<Plugin> getPlugin() 
 	{
 		return Optional.ofNullable(this.plugin);
-	}
-	
-	@Override
-	public boolean isPresent()
-	{
-		return this.plugin != null && this.plugin.isEnabled();
 	}
 
 	@Override

@@ -23,6 +23,6 @@ public class LoggerMessageHandler extends MessagerHandler
 	@Override
 	public MessagerHandler copy() 
 	{
-		return copyMessagesTo(() -> new LoggerMessageHandler(this.logger, this.logLevel));
+		return copyTo(() -> new LoggerMessageHandler(this.logger, this.logLevel));
 	}
 }

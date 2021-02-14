@@ -12,7 +12,7 @@ public class LuckPermsPermissionsManager implements PermissionsManager
 	{
 		this.luckPermsHook = luckPermsHook;
 	}
-	
+
 	@Override
 	public String getName() 
 	{

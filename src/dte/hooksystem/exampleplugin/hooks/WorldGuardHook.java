@@ -30,15 +30,15 @@ public class WorldGuardHook extends AbstractPluginHook
 	{
 		this.regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
 	}
-	public RegionManager getRegionManager(World world)
-	{
-		return this.regionContainer.get(BukkitAdapter.adapt(world));
-	}
+	
 	public ProtectedRegion getPlayerRegion(Player player) 
 	{
 		Set<ProtectedRegion> playerRegions = getPlayerRegions(player).getRegions();
 		
-		return playerRegions.isEmpty() ? null : playerRegions.iterator().next();
+		if(player.isEmpty())
+			return null;
+		
+		return playerRegions.iterator().next();
 	}
 	public ApplicableRegionSet getPlayerRegions(Player player) 
 	{
@@ -46,8 +46,12 @@ public class WorldGuardHook extends AbstractPluginHook
 	}
 	public ApplicableRegionSet getRegionsThatContain(Location location)
 	{
-		BlockVector3 locationVector = BukkitAdapter.asVector(location).toBlockPoint();
+		BlockVector3 vector = BukkitAdapter.asVector(location).toBlockPoint();
 		
-		return this.getRegionManager(location.getWorld()).getApplicableRegions(locationVector);
+		return getRegionManager(location.getWorld()).getApplicableRegions(vector);
+	}
+	public RegionManager getRegionManager(World world)
+	{
+		return this.regionContainer.get(BukkitAdapter.adapt(world));
 	}
 }

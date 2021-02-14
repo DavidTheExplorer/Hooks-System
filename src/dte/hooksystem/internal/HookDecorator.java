@@ -1,4 +1,4 @@
-package dte.hooksystem.internal.hooks;
+package dte.hooksystem.internal;
 
 import java.util.Optional;
 
@@ -25,12 +25,6 @@ public class HookDecorator implements PluginHook
 	public Optional<Plugin> getPlugin() 
 	{
 		return this.hook.getPlugin();
-	}
-
-	@Override
-	public boolean isPresent() 
-	{
-		return this.hook.isPresent();
 	}
 	
 	@Override

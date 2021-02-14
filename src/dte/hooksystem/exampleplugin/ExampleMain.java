@@ -6,7 +6,6 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import dte.hooksystem.api.HookSystemAPI;
 import dte.hooksystem.exampleplugin.hooks.WorldGuardHook;
 import dte.hooksystem.exampleplugin.hooks.permissionmanagers.LuckPermsHook;
 import dte.hooksystem.exampleplugin.hooks.permissionmanagers.PermissionsManagerHook;
@@ -21,56 +21,48 @@ import dte.hooksystem.exampleplugin.listeners.DisplayGroupListeners;
 import dte.hooksystem.exampleplugin.listeners.DisplayRegionListeners;
 import dte.hooksystem.exampleplugin.permissions.LocalPermissionsManager;
 import dte.hooksystem.exampleplugin.permissions.PermissionsManager;
-import dte.hooksystem.hooks.HooksManager;
+import dte.hooksystem.hooks.service.IHookService;
 
 public class ExampleMain extends JavaPlugin
 {
-	private HooksManager hooksManager;
+	private IHookService hookService;
 	private PermissionsManager permissionsManager;
 
 	@Override
 	public void onEnable()
 	{
-		this.hooksManager = new HooksManager(this);
-
-		//Register the hooks for WorldGuard and LuckPerms [Suggestion: always static import logToConsole() and withPluginPrefix()]
-		this.hooksManager.process(new WorldGuardHook(), new LuckPermsHook())
+		this.hookService = HookSystemAPI.createHookService(this);
+		
+		//Register the hooks of WorldGuard and LuckPerms (Suggestion: always static import AbsenceHandlersFactory)
+		HookSystemAPI.safeMultiHooking(this.hookService, new WorldGuardHook(), new LuckPermsHook())
 		.softdepend()
 		.ifPluginAbsent(logErrorToConsole(withPluginPrefix(this), "%plugin wasn't found on this server!", "will not use any functionality of it."))
 		.hook();
+		
+		this.permissionsManager = findPermissionsManager();
 
-		/*
-		 * |V| Plugin Workflow |V|
-		 */
+		//Registering Listeners
+		PluginManager pm = Bukkit.getPluginManager();
+		
+		pm.registerEvents(new DisplayGroupListeners(this.permissionsManager), this);
+		this.hookService.findHook(WorldGuardHook.class).ifPresent(wgHook -> pm.registerEvents(new DisplayRegionListeners(wgHook), this));
 
-		//Find a Permissions Manager Hook, otherwise use the local one
-		this.permissionsManager = findPermissionsManager().orElse(new LocalPermissionsManager());
-
-		//Display the online players' groups
+		//Displaying the online players' groups
 		Bukkit.getOnlinePlayers().stream()
 		.collect(groupingBy(player -> this.permissionsManager.getPlayerGroupName(player.getUniqueId())))
 		.forEach(this::displayGroup);
-
-		//Example Listeners
-		PluginManager pm = Bukkit.getPluginManager();
-
-		pm.registerEvents(new DisplayGroupListeners(this.permissionsManager), this);
-		this.hooksManager.findHook(WorldGuardHook.class).ifPresent(wgHook -> pm.registerEvents(new DisplayRegionListeners(wgHook), this));
 	}
-	public PermissionsManager getPermissionsManager()
-	{	
-		return this.permissionsManager;
-	}
-	private Optional<PermissionsManager> findPermissionsManager()
+	private PermissionsManager findPermissionsManager()
 	{
-		//Example of the extensibility of the Library: Using an interface for Permissions Managers plugins such as PermissionsEX and GroupManager
-		return this.hooksManager
-				.findHookOf(PermissionsManagerHook.class, () -> 
+		return this.hookService
+				.findHookOf(PermissionsManagerHook.class, managers -> 
 				{
-					Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "CONFLICT: More than one Permissions Manager detected! Closing the plugin...");
+					Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "CONFLICT: More than one Permissions Manager was detected! Closing the plugin...");
 					Bukkit.getPluginManager().disablePlugin(this);
 				})
-				.map(PermissionsManagerHook::getPermissionsManager);
+				.map(PermissionsManagerHook::getPermissionsManager)
+				.orElse(new LocalPermissionsManager()); //if no permissions managers were found, the plugin uses the local one
+
 	}
 	private void displayGroup(String groupName, List<? extends Player> players) 
 	{
@@ -78,6 +70,6 @@ public class ExampleMain extends JavaPlugin
 				.map(Player::getName)
 				.collect(joining(", "));
 
-		System.out.println(String.format("%s(%d players): %s", groupName, players.size(), playersNames));
+		Bukkit.broadcastMessage(String.format("%s(%d players): %s", groupName, players.size(), playersNames));
 	}
 }

@@ -1,8 +1,6 @@
 package dte.hooksystem.utils;
 
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 import java.util.function.Consumer;
 
 public class Iterators 
@@ -12,9 +10,9 @@ public class Iterators
 	
 	public static <T> void loop(T[] array, Consumer<T> action, Consumer<T> untilLastIteration) 
 	{
-		List<T> list = Arrays.asList(array);
+		Iterable<T> iterable = ArrayUtils.toIterable(array);
 		
-		loop(list, action, untilLastIteration);
+		loop(iterable, action, untilLastIteration);
 	}
 	public static <T> void loop(Iterable<T> iterable, Consumer<T> action, Consumer<T> untilLastIteration)
 	{

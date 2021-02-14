@@ -2,7 +2,6 @@ package dte.hooksystem.plugins.absencehandlers;
 
 import dte.hooksystem.hooks.PluginHook;
 
-@FunctionalInterface
 public interface PluginAbsenceHandler
 {
 	/**
@@ -11,6 +10,8 @@ public interface PluginAbsenceHandler
 	 * @param failedHook The hook that failed to be registered.
 	 */
 	void handle(PluginHook failedHook);
+	
+	PluginAbsenceHandler copy();
 	
 	//void accept(HandlerVisitor visitor);
 }

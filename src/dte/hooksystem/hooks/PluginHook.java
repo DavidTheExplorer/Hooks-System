@@ -6,9 +6,9 @@ import org.bukkit.plugin.Plugin;
 
 /**
  * Represents a safe wrapper of some functionality of a certain plugin. 
- * Implementations should expose public method to be used by the developer, so all the internal plugin's data are encapsulated.
+ * Implementations should expose *public* methods to be used by the developer - which encapsulates the internal plugin's data.
  * <p>
- * The suggested name for subtypes is <i>pluginName</i>Hook (e.g WorldEditHook, PermissionsEXHook).
+ * The suggested name for subtypes is <i>pluginName</i>Hook (e.g EssentialsHook, WorldEditHook).
  */
 public interface PluginHook
 {
@@ -20,18 +20,21 @@ public interface PluginHook
 	String getPluginName();
 
 	/**
-	 * Returns whether this hook can be used(usually checks that the hooked plugin exists on the server + is enabled).
+	 * Returns whether this hook can be used(e.g. can return false if a certain file is inaccessible).
 	 * <p>
-	 * Used <i>internally</i> for registration - The developer is not supposed to call this method.
+	 * This method is <b>not</b> supposed to be called outside the library.
 	 * 
 	 * @return Whether this hook is can be used.
 	 */
-	boolean isPresent();
+	default boolean isAvailable()
+	{
+		return true;
+	}
 	
 	/**
-	 * Returns an optional of the plugin this hook is supposed to hook to.
+	 * Returns an Optional of the plugin this hook is supposed to hook to, because it might not be on the server.
 	 * 
-	 * @return An optional of plugin of this hook.
+	 * @return An Optional of plugin of this hook.
 	 */
 	Optional<Plugin> getPlugin();
 
