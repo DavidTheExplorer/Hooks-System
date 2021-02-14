@@ -20,9 +20,9 @@ public interface PluginHook
 	String getPluginName();
 
 	/**
-	 * Returns whether this hook can be used(e.g. can return false if a file couldn't be accessed).
+	 * Returns whether this hook can be used(e.g. can return false if a certain file is inaccessible).
 	 * <p>
-	 * This method is *not* supposed to be called outside the library.
+	 * This method is <b>not</b> supposed to be called outside the library.
 	 * 
 	 * @return Whether this hook is can be used.
 	 */
