@@ -45,7 +45,7 @@ public class HookRepository implements IHookRepository
 	public <T> List<T> findHooksOf(Class<T> hookTypeClass)
 	{
 		Objects.requireNonNull(hookTypeClass);
-
+		
 		return this.hookByClass.values().stream()
 				.filter(hook -> hookTypeClass.isAssignableFrom(hook.getClass()))
 				.map(hookTypeClass::cast)
@@ -72,10 +72,10 @@ public class HookRepository implements IHookRepository
 	@Override
 	public boolean isHooked(Plugin plugin) 
 	{
-		Objects.requireNonNull(plugin);
+		String pluginName = Objects.requireNonNull(plugin).getName();
 		
 		return this.hookByClass.values().stream()
-				.anyMatch(hook -> hook.getPluginName().equals(plugin.getName()));
+				.anyMatch(hook -> hook.getPluginName().equals(pluginName));
 	}
 	
 	@Override

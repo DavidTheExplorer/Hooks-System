@@ -14,13 +14,15 @@ import dte.hooksystem.plugins.absencehandlers.factory.AbsenceHandlersFactory;
 public class HookProcess
 {
 	private final IHookService hookService;
+	private final PluginHook[] hooksToRegister;
 	
 	private boolean required = true;
 	private PluginAbsenceHandler pluginAbsenceHandler;
 	
-	public HookProcess(IHookService hookService) 
+	public HookProcess(IHookService hookService, PluginHook... hooksToRegister) 
 	{
-		this.hookService = hookService;
+		this.hookService = Objects.requireNonNull(hookService);
+		this.hooksToRegister = Objects.requireNonNull(hooksToRegister);
 	}
 	public HookProcess required() 
 	{
@@ -38,17 +40,15 @@ public class HookProcess
 		
 		if(this.required)
 			//if the hooks are required, the provided handler will run before before the plugin is disabled
-			this.pluginAbsenceHandler = AbsenceHandlersFactory.handleOrdered(handler, disablePlugin(this.hookService.getOwningPlugin()));
+			this.pluginAbsenceHandler = AbsenceHandlersFactory.handleInOrder(handler, disablePlugin(this.hookService.getOwningPlugin()));
 		else
 			this.pluginAbsenceHandler = handler;
 
 		return this;
 	}
-	public void hookTo(PluginHook... hooksToRegister)
+	public void hook()
 	{
-		Objects.requireNonNull(hooksToRegister);
-
-		for(PluginHook hook : hooksToRegister) 
+		for(PluginHook hook : this.hooksToRegister)
 			this.hookService.hookTo(hook, this.pluginAbsenceHandler);
 	}
 }

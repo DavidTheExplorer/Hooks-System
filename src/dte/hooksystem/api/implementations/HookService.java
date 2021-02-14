@@ -30,6 +30,7 @@ public class HookService implements IHookService
 	public void hookTo(PluginHook hook, PluginAbsenceHandler pluginAbsenceHandler) throws PluginAlreadyHookedException, HookInitException
 	{
 		Objects.requireNonNull(hook);
+		Objects.requireNonNull(pluginAbsenceHandler);
 
 		//if the hook's plugin is absent, call the handler and don't register the hook
 		Optional<Plugin> pluginHolder = hook.getPlugin();

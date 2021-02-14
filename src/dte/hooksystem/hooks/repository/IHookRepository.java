@@ -53,22 +53,22 @@ public interface IHookRepository
 	<T> Optional<T> findHookOf(Class<T> hookTypeClass, Consumer<List<T>> conflictsHandler);
 	
 	/**
-	 * Checks whether this registry contains a hook that is hooked to the given plugin.
+	 * Checks whether this repository contains a hook that is hooked to the given plugin.
 	 * 
 	 * @param plugin The potentially hooked plugin.
-	 * @return Whether this registry has an hook for the given plugin.
+	 * @return Whether this repository has an hook for the given plugin.
 	 */
 	boolean isHooked(Plugin plugin);
 	
 	/**
-	 * Returns the amount of registered hooks in this registry.
+	 * Returns the amount of registered hooks in this repository.
 	 * 
 	 * @return The registerd hooks amount.
 	 */
 	int size();
 	
 	/**
-	 * Returns a view set of the currently registered hooks in this registry.
+	 * Returns a view set of the currently registered hooks in this repository.
 	 * 
 	 * @return The current registered hooks.
 	 */

@@ -5,6 +5,7 @@ import org.bukkit.plugin.Plugin;
 import dte.hooksystem.api.implementations.HookProcess;
 import dte.hooksystem.api.implementations.HookRepository;
 import dte.hooksystem.api.implementations.HookService;
+import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.hooks.service.IHookService;
 
 public class HookSystemAPI 
@@ -16,8 +17,8 @@ public class HookSystemAPI
 	{
 		return new HookService(owningPlugin, new HookRepository());
 	}
-	public static HookProcess safeHookingSession(IHookService hookService) 
+	public static HookProcess safeMultiHooking(IHookService hookService, PluginHook... hooksToRegister) 
 	{
-		return new HookProcess(hookService);
+		return new HookProcess(hookService, hooksToRegister);
 	}
 }
