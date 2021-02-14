@@ -34,16 +34,16 @@ public class ExampleMain extends JavaPlugin
 		this.hookService = HookSystemAPI.createHookService(this);
 		
 		//Register the hooks of WorldGuard and LuckPerms (Suggestion: always static import AbsenceHandlersFactory)
-		HookSystemAPI.safeHookingSession(this.hookService)
+		HookSystemAPI.safeMultiHooking(this.hookService, new WorldGuardHook(), new LuckPermsHook())
 		.softdepend()
 		.ifPluginAbsent(logErrorToConsole(withPluginPrefix(this), "%plugin wasn't found on this server!", "will not use any functionality of it."))
-		.hookTo(new WorldGuardHook(), new LuckPermsHook());
+		.hook();
 		
 		this.permissionsManager = findPermissionsManager();
 
 		//Registering Listeners
 		PluginManager pm = Bukkit.getPluginManager();
-
+		
 		pm.registerEvents(new DisplayGroupListeners(this.permissionsManager), this);
 		this.hookService.findHook(WorldGuardHook.class).ifPresent(wgHook -> pm.registerEvents(new DisplayRegionListeners(wgHook), this));
 
