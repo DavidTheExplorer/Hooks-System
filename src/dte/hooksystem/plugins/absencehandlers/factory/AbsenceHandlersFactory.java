@@ -75,28 +75,24 @@ public class AbsenceHandlersFactory
 		return log(logger, logLevel, RAW, messages);
 	}
 
-	/*
-	 * Plugin
-	 */
-	public static PluginAbsenceHandler disablePlugin(Plugin plugin) 
-	{
-		return new DisablePluginHandler(plugin);
-	}
-
 
 	/*
 	 * General
 	 */
-	public static PluginAbsenceHandler handleOrdered(PluginAbsenceHandler... handlers)
-	{
-		return CompositeHandler.of(CompositeHandlerOptions.FIFO, handlers);
-	}
 	public static PluginAbsenceHandler run(Consumer<PluginHook> action)
 	{
 		return new ActionHandler(action);
 	}
+	public static PluginAbsenceHandler disablePlugin(Plugin plugin) 
+	{
+		return new DisablePluginHandler(plugin);
+	}
+	public static PluginAbsenceHandler handleInOrder(PluginAbsenceHandler... handlers)
+	{
+		return CompositeHandler.of(CompositeHandlerOptions.FIFO, handlers);
+	}
 	
-	private static void addStyledMessages(MessagerHandler handler, MessageStyle style, String[] messages) 
+	private static void addStyledMessages(MessagerHandler handler, MessageStyle style, String... messages) 
 	{
 		String[] styledMessages = style.apply(Arrays.asList(messages));
 		
@@ -108,7 +104,7 @@ public class AbsenceHandlersFactory
 		public static MessageStyle withPluginPrefix(Plugin plugin) 
 		{
 			return new MessageStyle()
-					.prefixedWith(String.format("[%s]", plugin.getName()));
+					.prefixedWith(String.format("[%s] ", plugin.getName()));
 		}
 	}
 }
