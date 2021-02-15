@@ -1,4 +1,4 @@
-package dte.hooksystem.exampleplugin.hooks.permissionmanagers;
+package dte.hooksystem.exampleplugin.hooks;
 
 import dte.hooksystem.exampleplugin.permissions.PermissionsManager;
 

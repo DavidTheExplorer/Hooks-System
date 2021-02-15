@@ -8,11 +8,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import dte.hooksystem.exampleplugin.permissions.PermissionsManager;
 
-public class DisplayGroupListeners implements Listener
+public class DisplayGroupListener implements Listener
 {
 	private final PermissionsManager permissionsManager;
 
-	public DisplayGroupListeners(PermissionsManager permissionsManager) 
+	public DisplayGroupListener(PermissionsManager permissionsManager) 
 	{
 		this.permissionsManager = permissionsManager;
 	}

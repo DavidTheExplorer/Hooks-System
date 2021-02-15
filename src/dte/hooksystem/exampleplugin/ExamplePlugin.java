@@ -17,11 +17,11 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import dte.hooksystem.api.HookSystemAPI;
+import dte.hooksystem.exampleplugin.hooks.LuckPermsHook;
+import dte.hooksystem.exampleplugin.hooks.PermissionsManagerHook;
 import dte.hooksystem.exampleplugin.hooks.WorldGuardHook;
-import dte.hooksystem.exampleplugin.hooks.permissionmanagers.LuckPermsHook;
-import dte.hooksystem.exampleplugin.hooks.permissionmanagers.PermissionsManagerHook;
-import dte.hooksystem.exampleplugin.listeners.DisplayGroupListeners;
-import dte.hooksystem.exampleplugin.listeners.DisplayRegionListeners;
+import dte.hooksystem.exampleplugin.listeners.DisplayGroupListener;
+import dte.hooksystem.exampleplugin.listeners.DisplayRegionListener;
 import dte.hooksystem.exampleplugin.permissions.MemoryPermissionsManager;
 import dte.hooksystem.exampleplugin.permissions.PermissionsManager;
 import dte.hooksystem.hooks.service.IHookService;
@@ -46,8 +46,8 @@ public class ExamplePlugin extends JavaPlugin
 		//Registers listeners
 		PluginManager pm = Bukkit.getPluginManager();
 
-		pm.registerEvents(new DisplayGroupListeners(this.permissionsManager), this);
-		hookService.findHook(WorldGuardHook.class).ifPresent(wgHook -> pm.registerEvents(new DisplayRegionListeners(wgHook), this));
+		pm.registerEvents(new DisplayGroupListener(this.permissionsManager), this);
+		hookService.findHook(WorldGuardHook.class).ifPresent(wgHook -> pm.registerEvents(new DisplayRegionListener(wgHook), this));
 
 		//Displays the online players' groups
 		Bukkit.getOnlinePlayers()

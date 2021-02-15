@@ -1,4 +1,4 @@
-package dte.hooksystem.exampleplugin.hooks.permissionmanagers;
+package dte.hooksystem.exampleplugin.hooks;
 
 import java.util.UUID;
 

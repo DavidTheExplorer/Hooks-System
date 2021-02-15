@@ -2,11 +2,11 @@ package dte.hooksystem.exampleplugin.permissions;
 
 import java.util.UUID;
 
-import dte.hooksystem.exampleplugin.hooks.permissionmanagers.LuckPermsHook;
+import dte.hooksystem.exampleplugin.hooks.LuckPermsHook;
 
 /*
- * This is an example of what a plugin that supports multiple permissions managers would implement.
- * This class' entire functionality depends on LuckPerms' hook.
+ * This is an example of what a plugin that supports multiple permissions managers would have.
+ * The entire functionality of this class depends on LuckPerms' hook.
  */
 public class LuckPermsPermissionsManager implements PermissionsManager
 {
