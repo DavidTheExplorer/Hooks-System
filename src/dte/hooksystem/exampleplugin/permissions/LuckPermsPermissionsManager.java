@@ -4,6 +4,10 @@ import java.util.UUID;
 
 import dte.hooksystem.exampleplugin.hooks.permissionmanagers.LuckPermsHook;
 
+/*
+ * This is an example of what a plugin that supports multiple permissions managers would implement.
+ * This class' entire functionality depends on LuckPerms' hook.
+ */
 public class LuckPermsPermissionsManager implements PermissionsManager
 {
 	private final LuckPermsHook luckPermsHook;
@@ -22,7 +26,7 @@ public class LuckPermsPermissionsManager implements PermissionsManager
 	@Override
 	public String getPlayerGroupName(UUID playerUUID) 
 	{
-		return this.luckPermsHook.getPlayerGroupName(playerUUID);
+		return this.luckPermsHook.getUser(playerUUID).getPrimaryGroup();
 	}
 
 	@Override
