@@ -8,6 +8,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,50 +28,50 @@ import dte.hooksystem.hooks.service.IHookService;
 
 public class ExamplePlugin extends JavaPlugin
 {
-	private IHookService hookService;
-	private PermissionsManager permissionsManager; //The plugin supports multiple Permission Managers, encapsulated behind a PermissionsManager interface
+	private PermissionsManager permissionsManager; //The plugin supports multiple Permissions Managers by encapsulation behind an interface
 
 	@Override
 	public void onEnable()
 	{
-		this.hookService = HookSystemAPI.createHookService(this);
+		//Each plugin that uses this library has its own HookService
+		IHookService hookService = HookSystemAPI.createHookService(this);
 
 		//Registers the hooks of WorldGuard and LuckPerms (Suggestion: always static import AbsenceHandlersFactory)
-		this.hookService.register(new WorldGuardHook(), logErrorToConsole(withPluginPrefix(this), "WorldGuard wasn't found on this server! It won't be used."));
-		this.hookService.register(new LuckPermsHook(), handleInOrder(logErrorToConsole(withPluginPrefix(this), "heavily depends on LuckPerms! Closing..."), disablePlugin(this)));
+		hookService.register(new WorldGuardHook(), logErrorToConsole(withPluginPrefix(this), "WorldGuard wasn't found on this server! It won't be used."));
+		hookService.register(new LuckPermsHook(), handleInOrder(logErrorToConsole(withPluginPrefix(this), "heavily depends on LuckPerms! Closing..."), disablePlugin(this)));
 
-		//Finds a Permissions Manager Hook, otherwise returns the local(in memory) one
-		this.permissionsManager = findPermissionsManager();
+		//Finds a Permissions Manager Hook, Otherwise uses the default one
+		this.permissionsManager = findPermissionsManager(hookService).orElse(new MemoryPermissionsManager());
 
-		//Registers listeners that depend on the Hooks
+		//Registers listeners
 		PluginManager pm = Bukkit.getPluginManager();
 
 		pm.registerEvents(new DisplayGroupListeners(this.permissionsManager), this);
-		this.hookService.findHook(WorldGuardHook.class).ifPresent(wgHook -> pm.registerEvents(new DisplayRegionListeners(wgHook), this));
+		hookService.findHook(WorldGuardHook.class).ifPresent(wgHook -> pm.registerEvents(new DisplayRegionListeners(wgHook), this));
 
 		//Displays the online players' groups
-		Bukkit.getOnlinePlayers().stream()
+		Bukkit.getOnlinePlayers()
+		.stream()
 		.collect(groupingBy(player -> this.permissionsManager.getPlayerGroupName(player.getUniqueId())))
 		.forEach(this::displayGroup);
 	}
-	private PermissionsManager findPermissionsManager()
+	private Optional<PermissionsManager> findPermissionsManager(IHookService hookService)
 	{
-		return this.hookService
+		return hookService
 				.findHookOf(PermissionsManagerHook.class, managers -> 
 				{
 					Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "CONFLICT: More than one Permissions Manager was detected! Closing the plugin...");
 					Bukkit.getPluginManager().disablePlugin(this);
 				})
-				.map(PermissionsManagerHook::getPermissionsManager)
-				.orElse(new MemoryPermissionsManager()); //if no permissions managers were found, the plugin uses the default one
+				.map(PermissionsManagerHook::getPermissionsManager);
 
 	}
-	private void displayGroup(String groupName, List<? extends Player> players) 
+	private void displayGroup(String groupName, List<? extends Player> onlineMembers) 
 	{
-		String playersNames = players.stream()
+		String playersNames = onlineMembers.stream()
 				.map(Player::getName)
 				.collect(joining(", "));
 
-		Bukkit.broadcastMessage(String.format("%s(%d players): %s", groupName, players.size(), playersNames));
+		Bukkit.broadcastMessage(String.format("%s(%d online members): %s", groupName, onlineMembers.size(), playersNames));
 	}
 }

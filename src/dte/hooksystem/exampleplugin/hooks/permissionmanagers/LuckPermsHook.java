@@ -17,6 +17,7 @@ public class LuckPermsHook extends ServicedHook<LuckPerms> implements Permission
 
 	public LuckPermsHook()
 	{
+		//determine the hook's plugin(by its name) and the service's class
 		super("LuckPerms", LuckPerms.class);
 	}
 
@@ -26,7 +27,7 @@ public class LuckPermsHook extends ServicedHook<LuckPerms> implements Permission
 		//This method runs once the library verified that LuckPerms is on the server
 		//Since we're inside it - It's safe to access its API
 		
-		super.init(); //gets the LuckPerms object from Bukkit's ServicesManager 
+		super.init(); //inits the LuckPerms object from Bukkit's ServicesManager 
 		this.permissionsManager = new LuckPermsPermissionsManager(this);
 	}
 
