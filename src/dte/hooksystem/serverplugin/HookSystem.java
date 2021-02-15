@@ -1,10 +1,10 @@
 package dte.hooksystem.serverplugin;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import dte.hooksystem.utils.OnlineOperators;
+import dte.hooksystem.utils.PluginUtils;
 
 public class HookSystem extends JavaPlugin
 {
@@ -17,16 +17,11 @@ public class HookSystem extends JavaPlugin
 		
 		OnlineOperators.init();
 		
-		logToConsole(ChatColor.GREEN + "Listening to incoming Plugins' Hooks...");
+		PluginUtils.logToConsole(this, ChatColor.GREEN + "Listening to incoming Plugins' Hooks...");
 	}
 	
 	public static HookSystem getInstance()
 	{
 		return INSTANCE;
-	}
-	
-	private void logToConsole(String message) 
-	{
-		Bukkit.getConsoleSender().sendMessage(String.format("[%s] %s", getDescription().getName(), message));
 	}
 }
