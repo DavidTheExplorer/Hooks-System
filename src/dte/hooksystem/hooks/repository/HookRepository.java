@@ -1,4 +1,4 @@
-package dte.hooksystem.api.implementations;
+package dte.hooksystem.hooks.repository;
 
 import static java.util.stream.Collectors.toList;
 
@@ -9,12 +9,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 
 import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.hooks.repository.IHookRepository;
 
 public class HookRepository implements IHookRepository
 {
@@ -33,9 +31,6 @@ public class HookRepository implements IHookRepository
 	{
 		PluginHook hook = this.hookByClass.get(hookClass);
 		
-		if(hook == null)
-			return Optional.empty();
-		
 		return Optional.ofNullable(hook)
 				.map(hookClass::cast)
 				.filter(PluginHook::isAvailable);
@@ -50,23 +45,6 @@ public class HookRepository implements IHookRepository
 				.filter(hook -> hookTypeClass.isAssignableFrom(hook.getClass()))
 				.map(hookTypeClass::cast)
 				.collect(toList());
-	}
-	
-	@Override
-	public <T> Optional<T> findHookOf(Class<T> hookTypeClass, Consumer<List<T>> conflictsHandler)
-	{
-		Objects.requireNonNull(conflictsHandler);
-		
-		List<T> hooksFound = findHooksOf(hookTypeClass);
-
-		if(hooksFound.isEmpty())
-			return Optional.empty();
-
-		if(hooksFound.size() == 1)
-			return Optional.of(hooksFound.get(0));
-
-		conflictsHandler.accept(hooksFound);
-		return Optional.empty();
 	}
 	
 	@Override
