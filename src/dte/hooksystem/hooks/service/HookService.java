@@ -1,4 +1,4 @@
-package dte.hooksystem.api.implementations;
+package dte.hooksystem.hooks.service;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +12,6 @@ import dte.hooksystem.exceptions.HookInitException;
 import dte.hooksystem.exceptions.PluginAlreadyHookedException;
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.hooks.repository.IHookRepository;
-import dte.hooksystem.hooks.service.IHookService;
 import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
 
 public class HookService implements IHookService
@@ -27,7 +26,7 @@ public class HookService implements IHookService
 	}
 	
 	@Override
-	public void hookTo(PluginHook hook, PluginAbsenceHandler pluginAbsenceHandler) throws PluginAlreadyHookedException, HookInitException
+	public void register(PluginHook hook, PluginAbsenceHandler pluginAbsenceHandler) throws PluginAlreadyHookedException, HookInitException
 	{
 		Objects.requireNonNull(hook);
 		Objects.requireNonNull(pluginAbsenceHandler);
@@ -56,7 +55,7 @@ public class HookService implements IHookService
 			throw new HookInitException(hook.getPluginName(), exception);
 		}
 
-		//Register the hook
+		//register the hook
 		this.hookRepository.register(hook);
 	}
 

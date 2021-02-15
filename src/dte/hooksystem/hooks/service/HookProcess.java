@@ -1,11 +1,10 @@
-package dte.hooksystem.api.implementations;
+package dte.hooksystem.hooks.service;
 
 import static dte.hooksystem.plugins.absencehandlers.factory.AbsenceHandlersFactory.disablePlugin;
 
 import java.util.Objects;
 
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.hooks.service.IHookService;
 import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
 import dte.hooksystem.plugins.absencehandlers.factory.AbsenceHandlersFactory;
 
@@ -46,9 +45,9 @@ public class HookProcess
 
 		return this;
 	}
-	public void hook()
+	public void register()
 	{
 		for(PluginHook hook : this.hooksToRegister)
-			this.hookService.hookTo(hook, this.pluginAbsenceHandler);
+			this.hookService.register(hook, this.pluginAbsenceHandler);
 	}
 }

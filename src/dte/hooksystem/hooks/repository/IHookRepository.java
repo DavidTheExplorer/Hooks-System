@@ -1,6 +1,7 @@
 package dte.hooksystem.hooks.repository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -31,7 +32,7 @@ public interface IHookRepository
 	 * @return The registered hook of the given hook class.
 	 */
 	<H extends PluginHook> Optional<H> findHook(Class<H> hookClass);
-	
+
 	/**
 	 * Returns all the hooks that are <i>subtype</i> or <i>implement</i> the specified parent type.
 	 * 
@@ -40,7 +41,7 @@ public interface IHookRepository
 	 * @return A list of the hooks that extend the specified parent type.
 	 */
 	<T> List<T> findHooksOf(Class<T> hookTypeClass);
-	
+
 	/**
 	 * Returns the registered hook which is subtype of the provided {@code hook class}; 
 	 * If more than 1 was registered, the provided {@code conflictsHandler} is executed.
@@ -50,8 +51,22 @@ public interface IHookRepository
 	 * @param conflictsHandler What to do if 2 hooks of the provided {@code hook class} were registered, it accepts the list of the found hooks.
 	 * @return The registered hook of the provided {@code hook type}.
 	 */
-	<T> Optional<T> findHookOf(Class<T> hookTypeClass, Consumer<List<T>> conflictsHandler);
-	
+	default <T> Optional<T> findHookOf(Class<T> hookTypeClass, Consumer<List<T>> conflictsHandler)
+	{
+		Objects.requireNonNull(conflictsHandler);
+		
+		List<T> hooksFound = findHooksOf(hookTypeClass);
+		
+		if(hooksFound.isEmpty())
+			return Optional.empty();
+
+		if(hooksFound.size() == 1)
+			return Optional.of(hooksFound.get(0));
+		
+		conflictsHandler.accept(hooksFound);
+		return Optional.empty();
+	}
+
 	/**
 	 * Checks whether this repository contains a hook that is hooked to the given plugin.
 	 * 
@@ -59,14 +74,14 @@ public interface IHookRepository
 	 * @return Whether this repository has an hook for the given plugin.
 	 */
 	boolean isHooked(Plugin plugin);
-	
+
 	/**
 	 * Returns the amount of registered hooks in this repository.
 	 * 
 	 * @return The registerd hooks amount.
 	 */
 	int size();
-	
+
 	/**
 	 * Returns a view set of the currently registered hooks in this repository.
 	 * 

@@ -24,7 +24,7 @@ public interface IHookService
 	 * @throws PluginAlreadyHookedException If this service already has a registered hook for the provided hook's plugin.
 	 * @throws HookInitException If there was a problem during the hook's {@code init()} method.
 	 */
-	void hookTo(PluginHook hook, PluginAbsenceHandler handler) throws PluginAlreadyHookedException, HookInitException;
+	void register(PluginHook hook, PluginAbsenceHandler handler) throws PluginAlreadyHookedException, HookInitException;
 	
 	<H extends PluginHook> Optional<H> findHook(Class<H> hookClass);
 	<T> List<T> findHooksOf(Class<T> hookTypeClass);

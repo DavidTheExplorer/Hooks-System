@@ -2,10 +2,10 @@ package dte.hooksystem.api;
 
 import org.bukkit.plugin.Plugin;
 
-import dte.hooksystem.api.implementations.HookProcess;
-import dte.hooksystem.api.implementations.HookRepository;
-import dte.hooksystem.api.implementations.HookService;
 import dte.hooksystem.hooks.PluginHook;
+import dte.hooksystem.hooks.repository.HookRepository;
+import dte.hooksystem.hooks.service.HookProcess;
+import dte.hooksystem.hooks.service.HookService;
 import dte.hooksystem.hooks.service.IHookService;
 
 public class HookSystemAPI 
