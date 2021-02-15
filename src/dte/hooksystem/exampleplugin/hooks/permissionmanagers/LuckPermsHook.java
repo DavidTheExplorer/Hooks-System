@@ -9,37 +9,44 @@ import dte.hooksystem.exampleplugin.permissions.LuckPermsPermissionsManager;
 import dte.hooksystem.exampleplugin.permissions.PermissionsManager;
 import dte.hooksystem.hooks.ServicedHook;
 import net.luckperms.api.LuckPerms;
+import net.luckperms.api.model.user.User;
 
 public class LuckPermsHook extends ServicedHook<LuckPerms> implements PermissionsManagerHook
 {
 	private LuckPermsPermissionsManager permissionsManager;
-	
+
 	public LuckPermsHook()
 	{
 		super("LuckPerms", LuckPerms.class);
 	}
-	
+
 	@Override
 	public void init() throws Exception
 	{
-		super.init();
+		//This method runs once the library verified that LuckPerms is on the server
+		//Since we're inside it - It's safe to access its API
+		
+		super.init(); //gets the LuckPerms object from Bukkit's ServicesManager 
 		this.permissionsManager = new LuckPermsPermissionsManager(this);
 	}
-	
+
 	@Override
 	public PermissionsManager getPermissionsManager() 
 	{
 		return this.permissionsManager;
 	}
-	
-	public String getPlayerGroupName(UUID playerUUID) 
+
+	/*
+	 * Public LuckPerms Wrapper Methods
+	 */
+	public User getUser(UUID playerUUID) 
 	{
 		Player player = Bukkit.getPlayer(playerUUID);
 
 		if(player != null)
-			return this.serviced.getPlayerAdapter(Player.class).getUser(player).getPrimaryGroup();
+			return this.serviced.getPlayerAdapter(Player.class).getUser(player);
 		else
-			return this.serviced.getUserManager().loadUser(playerUUID).join().getPrimaryGroup();
+			return this.serviced.getUserManager().loadUser(playerUUID).join();
 	}
 	public boolean groupExists(String groupName) 
 	{

@@ -19,35 +19,36 @@ import dte.hooksystem.exampleplugin.hooks.permissionmanagers.LuckPermsHook;
 import dte.hooksystem.exampleplugin.hooks.permissionmanagers.PermissionsManagerHook;
 import dte.hooksystem.exampleplugin.listeners.DisplayGroupListeners;
 import dte.hooksystem.exampleplugin.listeners.DisplayRegionListeners;
-import dte.hooksystem.exampleplugin.permissions.LocalPermissionsManager;
+import dte.hooksystem.exampleplugin.permissions.MemoryPermissionsManager;
 import dte.hooksystem.exampleplugin.permissions.PermissionsManager;
 import dte.hooksystem.hooks.service.IHookService;
 
-public class ExampleMain extends JavaPlugin
+public class ExamplePlugin extends JavaPlugin
 {
 	private IHookService hookService;
-	private PermissionsManager permissionsManager;
+	private PermissionsManager permissionsManager; //The plugin supports multiple Permission Managers, encapsulated behind a PermissionsManager interface
 
 	@Override
 	public void onEnable()
 	{
 		this.hookService = HookSystemAPI.createHookService(this);
-		
-		//Register the hooks of WorldGuard and LuckPerms (Suggestion: always static import AbsenceHandlersFactory)
+
+		//Registers the hooks of WorldGuard and LuckPerms (Suggestion: always static import AbsenceHandlersFactory)
 		HookSystemAPI.safeMultiHooking(this.hookService, new WorldGuardHook(), new LuckPermsHook())
 		.softdepend()
 		.ifPluginAbsent(logErrorToConsole(withPluginPrefix(this), "%plugin wasn't found on this server!", "will not use any functionality of it."))
 		.hook();
-		
+
+		//Finds a Permissions Manager Hook, otherwise returns the local(in memory) one
 		this.permissionsManager = findPermissionsManager();
 
-		//Registering Listeners
+		//Registers listeners that depend on the Hooks
 		PluginManager pm = Bukkit.getPluginManager();
-		
+
 		pm.registerEvents(new DisplayGroupListeners(this.permissionsManager), this);
 		this.hookService.findHook(WorldGuardHook.class).ifPresent(wgHook -> pm.registerEvents(new DisplayRegionListeners(wgHook), this));
 
-		//Displaying the online players' groups
+		//Displays the online players' groups
 		Bukkit.getOnlinePlayers().stream()
 		.collect(groupingBy(player -> this.permissionsManager.getPlayerGroupName(player.getUniqueId())))
 		.forEach(this::displayGroup);
@@ -61,7 +62,7 @@ public class ExampleMain extends JavaPlugin
 					Bukkit.getPluginManager().disablePlugin(this);
 				})
 				.map(PermissionsManagerHook::getPermissionsManager)
-				.orElse(new LocalPermissionsManager()); //if no permissions managers were found, the plugin uses the local one
+				.orElse(new MemoryPermissionsManager()); //if no permissions managers were found, the plugin uses the default one
 
 	}
 	private void displayGroup(String groupName, List<? extends Player> players) 
