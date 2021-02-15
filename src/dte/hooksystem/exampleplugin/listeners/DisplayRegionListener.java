@@ -11,11 +11,11 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import dte.hooksystem.exampleplugin.hooks.WorldGuardHook;
 
-public class DisplayRegionListeners implements Listener
+public class DisplayRegionListener implements Listener
 {
 	private final WorldGuardHook worldGuardHook;
 
-	public DisplayRegionListeners(WorldGuardHook worldGuardHook) 
+	public DisplayRegionListener(WorldGuardHook worldGuardHook) 
 	{
 		this.worldGuardHook = worldGuardHook;
 	}

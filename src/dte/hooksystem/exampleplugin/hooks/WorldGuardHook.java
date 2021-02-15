@@ -22,15 +22,22 @@ public class WorldGuardHook extends AbstractPluginHook
 	
 	public WorldGuardHook()
 	{
+		//determine the hook's plugin(by its name)
 		super("WorldGuard");
 	}
 	
 	@Override
 	public void init()
 	{
+		//This method runs once the library verified that WorldGuard is on the server
+		//Since we're inside it - It's safe to access its API
+		
 		this.regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
 	}
 	
+	/*
+	 * Public LuckPerms Wrapper Methods
+	 */
 	public ProtectedRegion getPlayerRegion(Player player) 
 	{
 		Set<ProtectedRegion> playerRegions = getPlayerRegions(player).getRegions();
