@@ -1,4 +1,4 @@
-package dte.hooksystem.plugins.absencehandlers.factory;
+package dte.hooksystem.plugins.missinghandlers.factory;
 
 import static dte.hooksystem.messagestyle.MessageStyle.RAW;
 
@@ -12,39 +12,39 @@ import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.messagestyle.MessageStyle;
-import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
-import dte.hooksystem.plugins.absencehandlers.composite.CompositeHandler;
-import dte.hooksystem.plugins.absencehandlers.composite.CompositeHandlerOptions;
-import dte.hooksystem.plugins.absencehandlers.list.ActionHandler;
-import dte.hooksystem.plugins.absencehandlers.list.DisablePluginHandler;
-import dte.hooksystem.plugins.absencehandlers.list.DoNothingHandler;
-import dte.hooksystem.plugins.absencehandlers.list.logging.LogToConsoleHandler;
-import dte.hooksystem.plugins.absencehandlers.list.logging.LoggerMessageHandler;
-import dte.hooksystem.plugins.absencehandlers.list.logging.MessagerHandler;
+import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
+import dte.hooksystem.plugins.missinghandlers.composite.CompositeHandler;
+import dte.hooksystem.plugins.missinghandlers.composite.CompositeHandlerOptions;
+import dte.hooksystem.plugins.missinghandlers.list.ActionHandler;
+import dte.hooksystem.plugins.missinghandlers.list.DisablePluginHandler;
+import dte.hooksystem.plugins.missinghandlers.list.DoNothingHandler;
+import dte.hooksystem.plugins.missinghandlers.list.messagers.LogToConsoleHandler;
+import dte.hooksystem.plugins.missinghandlers.list.messagers.LoggerMessageHandler;
+import dte.hooksystem.plugins.missinghandlers.list.messagers.MessagerHandler;
 
-public class AbsenceHandlersFactory
+public class MissingHandlersFactory
 {
 	//Container of static factory methods
-	private AbsenceHandlersFactory(){}
+	private MissingHandlersFactory(){}
 	
 	//Cached Stateless Handlers
-	public static final PluginAbsenceHandler DO_NOTHING = new DoNothingHandler();
+	public static final MissingPluginHandler DO_NOTHING = new DoNothingHandler();
 	
 	/*
 	 * Console
 	 */
-	public static PluginAbsenceHandler logToConsole(String... messages)
+	public static MissingPluginHandler logToConsole(String... messages)
 	{
 		return logToConsole(RAW, messages);
 	}
-	public static PluginAbsenceHandler logToConsole(MessageStyle style, String... messages) 
+	public static MissingPluginHandler logToConsole(MessageStyle style, String... messages) 
 	{
 		LogToConsoleHandler handler = new LogToConsoleHandler();
 		addStyledMessages(handler, style, messages);
 
 		return handler;
 	}
-	public static PluginAbsenceHandler logErrorToConsole(String... messages) 
+	public static MissingPluginHandler logErrorToConsole(String... messages) 
 	{
 		//"Error" means that the messages become red
 		MessageStyle redStyle = new MessageStyle()
@@ -52,7 +52,7 @@ public class AbsenceHandlersFactory
 
 		return logToConsole(redStyle, messages);
 	}
-	public static PluginAbsenceHandler logErrorToConsole(MessageStyle style, String... messages) 
+	public static MissingPluginHandler logErrorToConsole(MessageStyle style, String... messages) 
 	{
 		//"Error" means that the messages become red
 		MessageStyle redStyle = style.withFinalTouch(message -> ChatColor.RED + message);
@@ -63,14 +63,14 @@ public class AbsenceHandlersFactory
 	/*
 	 * java.util.logging.Logger
 	 */
-	public static PluginAbsenceHandler log(Logger logger, Level logLevel, MessageStyle style, String... messages) 
+	public static MissingPluginHandler log(Logger logger, Level logLevel, MessageStyle style, String... messages) 
 	{
 		LoggerMessageHandler handler = new LoggerMessageHandler(logger, logLevel);
 		addStyledMessages(handler, style, messages);
 		
 		return handler;
 	}
-	public static PluginAbsenceHandler log(Logger logger, Level logLevel, String... messages) 
+	public static MissingPluginHandler log(Logger logger, Level logLevel, String... messages) 
 	{
 		return log(logger, logLevel, RAW, messages);
 	}
@@ -79,15 +79,15 @@ public class AbsenceHandlersFactory
 	/*
 	 * General
 	 */
-	public static PluginAbsenceHandler run(Consumer<PluginHook> action)
+	public static MissingPluginHandler run(Consumer<PluginHook> action)
 	{
 		return new ActionHandler(action);
 	}
-	public static PluginAbsenceHandler disablePlugin(Plugin plugin) 
+	public static MissingPluginHandler disablePlugin(Plugin plugin) 
 	{
 		return new DisablePluginHandler(plugin);
 	}
-	public static PluginAbsenceHandler handleInOrder(PluginAbsenceHandler... handlers)
+	public static MissingPluginHandler handleInOrder(MissingPluginHandler... handlers)
 	{
 		return CompositeHandler.of(CompositeHandlerOptions.FIFO, handlers);
 	}

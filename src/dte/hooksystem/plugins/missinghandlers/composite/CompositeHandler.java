@@ -1,4 +1,4 @@
-package dte.hooksystem.plugins.absencehandlers.composite;
+package dte.hooksystem.plugins.missinghandlers.composite;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,28 +9,28 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
+import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
 import dte.hooksystem.utils.ArrayUtils;
 
-public class CompositeHandler implements PluginAbsenceHandler, Iterable<PluginAbsenceHandler>
+public class CompositeHandler implements MissingPluginHandler, Iterable<MissingPluginHandler>
 {
-	private final Collection<PluginAbsenceHandler> handlers;
+	private final Collection<MissingPluginHandler> handlers;
 
-	private CompositeHandler(Collection<PluginAbsenceHandler> handlers) 
+	private CompositeHandler(Collection<MissingPluginHandler> handlers) 
 	{
 		this.handlers = handlers;
 	}
-	public static CompositeHandler of(CompositeHandlerOptions options, PluginAbsenceHandler... handlers) 
+	public static CompositeHandler of(CompositeHandlerOptions options, MissingPluginHandler... handlers) 
 	{
-		Collection<PluginAbsenceHandler> finalHandlers = ArrayUtils.toCollection(handlers, options.usesFIFO() ? HashSet::new : LinkedHashSet::new);
+		Collection<MissingPluginHandler> finalHandlers = ArrayUtils.toCollection(handlers, options.usesFIFO() ? HashSet::new : LinkedHashSet::new);
 
 		return new CompositeHandler(finalHandlers);
 	}
-	public void addHandler(PluginAbsenceHandler handler) 
+	public void addHandler(MissingPluginHandler handler) 
 	{
 		this.handlers.add(handler);
 	}
-	public void removeHandler(PluginAbsenceHandler handler) 
+	public void removeHandler(MissingPluginHandler handler) 
 	{
 		this.handlers.remove(handler);
 	}
@@ -38,30 +38,30 @@ public class CompositeHandler implements PluginAbsenceHandler, Iterable<PluginAb
 	@Override
 	public void handle(PluginHook failedHook)
 	{
-		for(PluginAbsenceHandler handler : this.handlers)
+		for(MissingPluginHandler handler : this.handlers)
 			handler.handle(failedHook);
 	}
 
 	@Override
-	public Iterator<PluginAbsenceHandler> iterator() 
+	public Iterator<MissingPluginHandler> iterator() 
 	{
 		return getAllHandlers().iterator();
 	}
 	
-	public Collection<PluginAbsenceHandler> getHandlersView(boolean deep)
+	public Collection<MissingPluginHandler> getHandlersView(boolean deep)
 	{
 		return Collections.unmodifiableCollection(deep ? getAllHandlers() : this.handlers);
 	}
 
 	//the returned list is created by a recursive search for every nested handler within this composite
-	private Collection<PluginAbsenceHandler> getAllHandlers()
+	private Collection<MissingPluginHandler> getAllHandlers()
 	{
-		List<PluginAbsenceHandler> allHandlers = new ArrayList<>();
+		List<MissingPluginHandler> allHandlers = new ArrayList<>();
 		addAllHandlers(this, allHandlers);
 
 		return allHandlers;
 	}
-	private static void addAllHandlers(PluginAbsenceHandler currentHandler, Collection<PluginAbsenceHandler> handlersList)
+	private static void addAllHandlers(MissingPluginHandler currentHandler, Collection<MissingPluginHandler> handlersList)
 	{
 		if(!(currentHandler instanceof CompositeHandler))
 		{
@@ -70,7 +70,7 @@ public class CompositeHandler implements PluginAbsenceHandler, Iterable<PluginAb
 		}
 		CompositeHandler compositeHandler = (CompositeHandler) currentHandler;
 
-		for(PluginAbsenceHandler encapsulatedHandler : compositeHandler.handlers) 
+		for(MissingPluginHandler encapsulatedHandler : compositeHandler.handlers) 
 			addAllHandlers(encapsulatedHandler, handlersList);
 	}
 }

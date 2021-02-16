@@ -1,9 +1,9 @@
-package dte.hooksystem.plugins.absencehandlers.list;
+package dte.hooksystem.plugins.missinghandlers.list;
 
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
+import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
 
-public class DoNothingHandler implements PluginAbsenceHandler
+public class DoNothingHandler implements MissingPluginHandler
 {
 	@Override
 	public void handle(PluginHook failedHook) 
