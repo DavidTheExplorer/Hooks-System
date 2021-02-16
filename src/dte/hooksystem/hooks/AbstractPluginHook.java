@@ -9,11 +9,11 @@ import org.bukkit.plugin.Plugin;
 /**
  * This class provides the basic structure for Hooks Implementations. 
  * <p>
- * All you need to do is to is:
+ * Extension Instructions:
  * <ul>
- * 		<li> super() the constructor with a plugin's name(don't do anything else there!). </li>
- * 		<li> Optionally override the {@code setup()} method for any initializations. </li>
- * 		<li> Now you can add any useful methods you want. </li>
+ * 	<li>super the constructor with a plugin's name(don't do anything else there!)</li>
+ * 	<li>Optional: Override the {@code init()} method to setup the hook(safe because the method runs after it was verified the plugin exists)</li>
+ * 	<li>Add any useful methods you want :)</li>
  * </ul>
  */
 public abstract class AbstractPluginHook implements PluginHook

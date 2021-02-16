@@ -5,10 +5,10 @@ import java.util.Optional;
 import org.bukkit.plugin.Plugin;
 
 /**
- * Represents a safe wrapper of some functionality of a certain plugin. 
- * Implementations should expose *public* methods to be used by the developer - which encapsulates the internal plugin's data.
+ * Represents a safe functionality wrapper of a certain plugin;
+ * Implementations should expose <i>public</i> methods - which encapsulates the internal plugin's data.
  * <p>
- * The suggested name for subtypes is <i>pluginName</i>Hook (e.g EssentialsHook, WorldEditHook).
+ * The suggested name for implementations is <i>pluginName</i>Hook (e.g EssentialsHook, WorldEditHook).
  */
 public interface PluginHook
 {
@@ -21,8 +21,6 @@ public interface PluginHook
 
 	/**
 	 * Returns whether this hook can be used(e.g. can return false if a certain file is inaccessible).
-	 * <p>
-	 * This method is <b>not</b> supposed to be called outside the library.
 	 * 
 	 * @return Whether this hook is can be used.
 	 */
@@ -39,9 +37,9 @@ public interface PluginHook
 	Optional<Plugin> getPlugin();
 
 	/** 
-	 * The only place where it's safe(and you're supposed to) to initialize stuff from the plugin's API (<i>e.g.</i> Storing the API instance).
+	 * The only place where it's safe to(and the developer is supposed to) initialize stuff from the plugin's code(<i>e.g.</i> Storing the API instance).
 	 * <p>
-	 * If an Exception is thrown from this method, it would be caught and be friendly displayed in the Console.
+	 * If an Exception was thrown from this method, it would be caught and be friendly displayed in the Console.
 	 * 
 	 * @throws Exception if any Exception was thrown.
 	 */
