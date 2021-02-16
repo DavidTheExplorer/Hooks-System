@@ -3,7 +3,7 @@ package dte.hooksystem.exceptions;
 import org.bukkit.plugin.Plugin;
 
 /**
- * Thrown when a developer tries to register another hook for the same plugin.
+ * Thrown when a developer attempts to register another hook for the same plugin.
  */
 public class PluginAlreadyHookedException extends HookException
 {

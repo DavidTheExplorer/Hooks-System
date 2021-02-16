@@ -14,41 +14,47 @@ import dte.hooksystem.hooks.PluginHook;
 public interface IHookRepository
 {
 	/**
-	 * Registers a new hook which can be retrieved by its class.
+	 * Registers a new hook which later can be retrieved by its class.
 	 * <p>
-	 * A plugin can only have <b>one</b> hook registered for, so there is no need to specify the plugin's name in any method.
+	 * Explanation: If the developer tries to register a hook whose plugin is not on the server, it will not be registered(and some MissingPluginHandler will run) - 
+	 * So there is no need to specify any plugin name in any method.
 	 * 
 	 * @param hook The hook to register.
 	 */
 	void register(PluginHook hook);
 
 	/**
-	 * Returns the registered instance of the given hook class. 
+	 * Returns an Optional of the registered instance of the given hook class. 
 	 * <p>
-	 * A plugin can only have <b>one</b> hook registered for, so there is no need to specify the plugin's name in any method.
+	 * If this method returned an Empty Optional, one of the following had happened:
+	 * <ul>
+	 * 	<li>The hook's plugin is missing in the server.</li>
+	 * 	<li>There was an Exception during the hook's <i>init()</i> method.</li>
+	 * </ul>
 	 * 
 	 * @param <H> The type of the hook.
-	 * @param hookClass The class of the hook.
+	 * @param hookClass The type of the hook.
 	 * @return The registered hook of the given hook class.
 	 */
 	<H extends PluginHook> Optional<H> findHook(Class<H> hookClass);
 
 	/**
-	 * Returns all the hooks that are <i>subtype</i> or <i>implement</i> the specified parent type.
+	 * Returns all the hooks that extend the specified parent class.
 	 * 
-	 * @param <T> The parent type.
+	 * @param <T> The parent class.
 	 * @param hookTypeClass The parent class.
 	 * @return A list of the hooks that extend the specified parent type.
 	 */
 	<T> List<T> findHooksOf(Class<T> hookTypeClass);
 
 	/**
-	 * Returns the registered hook which is subtype of the provided {@code hook class}; 
-	 * If more than 1 was registered, the provided {@code conflictsHandler} is executed.
+	 * Returns the registered hook that extends the provided {@code class}.
+	 * <p>
+	 * If zero were registered, an Empty Optional is registered; If more than 1 was registered, the provided {@code conflictsHandler} is executed and an Empty Optional is returned.
 	 * 
-	 * @param <T> The parent type.
-	 * @param hookTypeClass The type of the hook.
-	 * @param conflictsHandler What to do if 2 hooks of the provided {@code hook class} were registered, it accepts the list of the found hooks.
+	 * @param <T> The parent class.
+	 * @param hookTypeClass The parent class.
+	 * @param conflictsHandler What to do if 2 hooks of the provided {@code class} were registered, it accepts the list of the found hooks.
 	 * @return The registered hook of the provided {@code hook type}.
 	 */
 	default <T> Optional<T> findHookOf(Class<T> hookTypeClass, Consumer<List<T>> conflictsHandler)
@@ -78,12 +84,12 @@ public interface IHookRepository
 	/**
 	 * Returns the amount of registered hooks in this repository.
 	 * 
-	 * @return The registerd hooks amount.
+	 * @return The registered hooks amount.
 	 */
 	int size();
 
 	/**
-	 * Returns a view set of the currently registered hooks in this repository.
+	 * Returns the amount of registered hooks in this repository, at the time of execution.
 	 * 
 	 * @return The current registered hooks.
 	 */
