@@ -1,9 +1,9 @@
 package dte.hooksystem.exampleplugin;
 
-import static dte.hooksystem.plugins.absencehandlers.factory.AbsenceHandlersFactory.disablePlugin;
-import static dte.hooksystem.plugins.absencehandlers.factory.AbsenceHandlersFactory.handleInOrder;
-import static dte.hooksystem.plugins.absencehandlers.factory.AbsenceHandlersFactory.logErrorToConsole;
-import static dte.hooksystem.plugins.absencehandlers.factory.AbsenceHandlersFactory.MessageStylesFactory.withPluginPrefix;
+import static dte.hooksystem.plugins.missinghandlers.factory.MissingHandlersFactory.disablePlugin;
+import static dte.hooksystem.plugins.missinghandlers.factory.MissingHandlersFactory.handleInOrder;
+import static dte.hooksystem.plugins.missinghandlers.factory.MissingHandlersFactory.logErrorToConsole;
+import static dte.hooksystem.plugins.missinghandlers.factory.MissingHandlersFactory.MessageStylesFactory.withPluginPrefix;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 
@@ -36,7 +36,7 @@ public class ExamplePlugin extends JavaPlugin
 		//Each plugin that uses this library has its own HookService
 		IHookService hookService = HookSystemAPI.createHookService(this);
 
-		//Registers the hooks of WorldGuard and LuckPerms (Suggestion: always static import AbsenceHandlersFactory)
+		//Registers the hooks of WorldGuard and LuckPerms (Suggestion: always static import MissingHandlersFactory)
 		hookService.register(new WorldGuardHook(), logErrorToConsole(withPluginPrefix(this), "WorldGuard wasn't found on this server! It won't be used."));
 		hookService.register(new LuckPermsHook(), handleInOrder(logErrorToConsole(withPluginPrefix(this), "heavily depends on LuckPerms! Closing..."), disablePlugin(this)));
 
