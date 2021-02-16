@@ -18,12 +18,6 @@ public class NotifyOperatorsHandler extends MessagerHandler
 	{
 		notifyOperators(message);
 	}
-
-	@Override
-	public MessagerHandler copy()
-	{
-		return copyTo(NotifyOperatorsHandler::new);
-	}
 	
 	private void notifyOperators(String... messages) 
 	{

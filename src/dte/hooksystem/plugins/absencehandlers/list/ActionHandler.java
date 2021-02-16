@@ -8,7 +8,7 @@ import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
 public class ActionHandler implements PluginAbsenceHandler
 {
 	private final Consumer<PluginHook> action;
-	
+
 	public ActionHandler(Consumer<PluginHook> action) 
 	{
 		this.action = action;
@@ -18,11 +18,5 @@ public class ActionHandler implements PluginAbsenceHandler
 	public void handle(PluginHook failedHook)
 	{
 		this.action.accept(failedHook);
-	}
-	
-	@Override
-	public PluginAbsenceHandler copy() 
-	{
-		return new ActionHandler(this.action);
 	}
 }

@@ -1,7 +1,5 @@
 package dte.hooksystem.plugins.absencehandlers.composite;
 
-import static java.util.stream.Collectors.toList;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,20 +36,10 @@ public class CompositeHandler implements PluginAbsenceHandler, Iterable<PluginAb
 	}
 
 	@Override
-	public void handle(PluginHook failedHook) 
+	public void handle(PluginHook failedHook)
 	{
 		for(PluginAbsenceHandler handler : this.handlers)
 			handler.handle(failedHook);
-	}
-	
-	@Override
-	public CompositeHandler copy() 
-	{
-		List<PluginAbsenceHandler> clonedHandlers = this.handlers.stream()
-				.map(PluginAbsenceHandler::copy)
-				.collect(toList());
-
-		return new CompositeHandler(clonedHandlers);
 	}
 
 	@Override

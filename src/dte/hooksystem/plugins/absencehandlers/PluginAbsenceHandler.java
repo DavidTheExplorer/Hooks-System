@@ -10,6 +10,4 @@ public interface PluginAbsenceHandler
 	 * @param failedHook The hook that failed to be registered.
 	 */
 	void handle(PluginHook failedHook);
-	
-	PluginAbsenceHandler copy();
 }

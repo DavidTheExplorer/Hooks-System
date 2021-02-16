@@ -3,7 +3,6 @@ package dte.hooksystem.plugins.absencehandlers.list.logging;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
 
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
@@ -29,14 +28,6 @@ public abstract class MessagerHandler implements PluginAbsenceHandler
 		return this.templateMessages.stream()
 				.map(message -> injectHookInfo(message, failedHook))
 				.toArray(String[]::new);
-	}
-	protected MessagerHandler copyTo(Supplier<? extends MessagerHandler> baseSupplier)
-	{
-		MessagerHandler handler = baseSupplier.get();
-		
-		this.templateMessages.forEach(handler::addMessages);
-		
-		return handler;
 	}
 	public abstract void sendMessage(String message);
 	
