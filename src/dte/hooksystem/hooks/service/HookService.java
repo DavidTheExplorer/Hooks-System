@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.exceptions.HookInitException;
@@ -30,16 +31,15 @@ public class HookService implements IHookService
 	{
 		Objects.requireNonNull(hook);
 		Objects.requireNonNull(missingPluginHandler);
-
+		
+		Plugin plugin = Bukkit.getPluginManager().getPlugin(hook.getPluginName());
+		
 		//if the hook's plugin is missing, call the handler and don't register the hook
-		Optional<Plugin> pluginHolder = hook.getPlugin();
-
-		if(!pluginHolder.isPresent())
+		if(plugin == null)
 		{
 			missingPluginHandler.handle(hook);
 			return;
 		}
-		Plugin plugin = pluginHolder.get();
 
 		//a plugin can't have 2 different hooks
 		if(this.hookRepository.isHooked(plugin)) 
@@ -54,7 +54,7 @@ public class HookService implements IHookService
 		{
 			throw new HookInitException(hook.getPluginName(), exception);
 		}
-
+		
 		//register the hook
 		this.hookRepository.register(hook);
 	}
@@ -76,12 +76,6 @@ public class HookService implements IHookService
 	{
 		return this.hookRepository.findHookOf(hookTypeClass, conflictsHandler);
 	}
-	
-	@Override
-	public Plugin getOwningPlugin() 
-	{
-		return this.owningPlugin;
-	}
 
 	@Override
 	public Set<PluginHook> getHooksView()
@@ -93,5 +87,11 @@ public class HookService implements IHookService
 	public int hooksAmount() 
 	{
 		return this.hookRepository.size();
+	}
+	
+	@Override
+	public Plugin getOwningPlugin() 
+	{
+		return this.owningPlugin;
 	}
 }
