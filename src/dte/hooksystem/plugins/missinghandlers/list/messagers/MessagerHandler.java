@@ -1,13 +1,13 @@
-package dte.hooksystem.plugins.absencehandlers.list.logging;
+package dte.hooksystem.plugins.missinghandlers.list.messagers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
+import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
 
-public abstract class MessagerHandler implements PluginAbsenceHandler
+public abstract class MessagerHandler implements MissingPluginHandler
 {
 	private final List<String> templateMessages = new ArrayList<>();
 	

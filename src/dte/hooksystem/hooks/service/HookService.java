@@ -12,13 +12,13 @@ import dte.hooksystem.exceptions.HookInitException;
 import dte.hooksystem.exceptions.PluginAlreadyHookedException;
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.hooks.repository.IHookRepository;
-import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
+import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
 
 public class HookService implements IHookService
 {
 	private final Plugin owningPlugin;
 	private final IHookRepository hookRepository;
-
+	
 	public HookService(Plugin owningPlugin, IHookRepository hookRepository)
 	{
 		this.owningPlugin = Objects.requireNonNull(owningPlugin);
@@ -26,17 +26,17 @@ public class HookService implements IHookService
 	}
 	
 	@Override
-	public void register(PluginHook hook, PluginAbsenceHandler pluginAbsenceHandler) throws PluginAlreadyHookedException, HookInitException
+	public void register(PluginHook hook, MissingPluginHandler missingPluginHandler) throws PluginAlreadyHookedException, HookInitException
 	{
 		Objects.requireNonNull(hook);
-		Objects.requireNonNull(pluginAbsenceHandler);
+		Objects.requireNonNull(missingPluginHandler);
 
-		//if the hook's plugin is absent, call the handler and don't register the hook
+		//if the hook's plugin is missing, call the handler and don't register the hook
 		Optional<Plugin> pluginHolder = hook.getPlugin();
 
 		if(!pluginHolder.isPresent())
 		{
-			pluginAbsenceHandler.handle(hook);
+			missingPluginHandler.handle(hook);
 			return;
 		}
 		Plugin plugin = pluginHolder.get();

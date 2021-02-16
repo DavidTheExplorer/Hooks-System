@@ -3,15 +3,15 @@ package dte.hooksystem.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
-import dte.hooksystem.plugins.absencehandlers.composite.CompositeHandler;
+import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
+import dte.hooksystem.plugins.missinghandlers.composite.CompositeHandler;
 
-public class AbsenceHandlersUtilities 
+public class MissingHandlersUtilities 
 {
 	//Container of static methods
-	private AbsenceHandlersUtilities(){}
+	private MissingHandlersUtilities(){}
 	
-	public static boolean isInstance(PluginAbsenceHandler handler, Class<?> classz) 
+	public static boolean isInstance(MissingPluginHandler handler, Class<?> classz) 
 	{
 		if(classz.isInstance(handler))
 			return true;
@@ -26,14 +26,14 @@ public class AbsenceHandlersUtilities
 		}
 		return false;
 	}
-	public static <H extends PluginAbsenceHandler> List<H> cast(PluginAbsenceHandler handler, Class<H> hookClass)
+	public static <H extends MissingPluginHandler> List<H> cast(MissingPluginHandler handler, Class<H> hookClass)
 	{
 		List<H> classHandlers = new ArrayList<>();
 		addClassHandlers(handler, hookClass, classHandlers);
 		
 		return classHandlers;
 	}
-	private static <H extends PluginAbsenceHandler> void addClassHandlers(PluginAbsenceHandler handler, Class<H> hookClass, List<H> handlersList)
+	private static <H extends MissingPluginHandler> void addClassHandlers(MissingPluginHandler handler, Class<H> hookClass, List<H> handlersList)
 	{
 		if(hookClass.isInstance(handler)) 
 		{
@@ -46,12 +46,12 @@ public class AbsenceHandlersUtilities
 		{
 			CompositeHandler compositeHandler = (CompositeHandler) handler;
 
-			for(PluginAbsenceHandler encapsulatedHandler : compositeHandler) 
+			for(MissingPluginHandler encapsulatedHandler : compositeHandler) 
 				addClassHandlers(encapsulatedHandler, hookClass, handlersList);
 		}
 	}
 	
-	public static Runnable toRunnable(PluginAbsenceHandler handler) 
+	public static Runnable toRunnable(MissingPluginHandler handler) 
 	{
 		return () -> handler.handle(null);
 	}

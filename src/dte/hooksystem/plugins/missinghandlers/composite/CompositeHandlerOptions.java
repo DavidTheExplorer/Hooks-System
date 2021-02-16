@@ -1,4 +1,4 @@
-package dte.hooksystem.plugins.absencehandlers.composite;
+package dte.hooksystem.plugins.missinghandlers.composite;
 
 public class CompositeHandlerOptions 
 {

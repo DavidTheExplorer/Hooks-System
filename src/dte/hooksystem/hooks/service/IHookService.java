@@ -10,7 +10,7 @@ import org.bukkit.plugin.Plugin;
 import dte.hooksystem.exceptions.HookInitException;
 import dte.hooksystem.exceptions.PluginAlreadyHookedException;
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
+import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
 
 public interface IHookService
 {
@@ -20,11 +20,11 @@ public interface IHookService
 	 * Registers the provided {@code hook} as supported by the plugin that owns this service, and initializes it.
 	 * 
 	 * @param hook The hook to register.
-	 * @param handler The handler to run when a hook cannot be registered because its plugin is not on the server.
+	 * @param missingPluginHandler The handler to run when a hook cannot be registered because its plugin is not on the server.
 	 * @throws PluginAlreadyHookedException If this service already has a registered hook for the provided hook's plugin.
 	 * @throws HookInitException If there was a problem during the hook's {@code init()} method.
 	 */
-	void register(PluginHook hook, PluginAbsenceHandler handler) throws PluginAlreadyHookedException, HookInitException;
+	void register(PluginHook hook, MissingPluginHandler missingPluginHandler) throws PluginAlreadyHookedException, HookInitException;
 	
 	<H extends PluginHook> Optional<H> findHook(Class<H> hookClass);
 	<T> List<T> findHooksOf(Class<T> hookTypeClass);

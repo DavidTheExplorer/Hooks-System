@@ -1,4 +1,4 @@
-package dte.hooksystem.plugins.absencehandlers.list.logging;
+package dte.hooksystem.plugins.missinghandlers.list.messagers;
 
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.utils.OnlineOperators;

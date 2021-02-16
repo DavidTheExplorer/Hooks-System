@@ -1,4 +1,4 @@
-package dte.hooksystem.plugins.absencehandlers.list.logging;
+package dte.hooksystem.plugins.missinghandlers.list.messagers;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
