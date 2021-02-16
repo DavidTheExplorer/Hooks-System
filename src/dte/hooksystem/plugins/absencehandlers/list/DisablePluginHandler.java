@@ -9,21 +9,15 @@ import dte.hooksystem.plugins.absencehandlers.PluginAbsenceHandler;
 public class DisablePluginHandler implements PluginAbsenceHandler
 {
 	private final Plugin plugin;
-
+	
 	public DisablePluginHandler(Plugin plugin) 
 	{
 		this.plugin = plugin;
 	}
-
+	
 	@Override
 	public void handle(PluginHook failedHook)
 	{
 		Bukkit.getPluginManager().disablePlugin(this.plugin);
-	}
-
-	@Override
-	public PluginAbsenceHandler copy()
-	{
-		return new DisablePluginHandler(this.plugin);
 	}
 }

@@ -9,10 +9,4 @@ public class LogToConsoleHandler extends MessagerHandler
 	{
 		Bukkit.getConsoleSender().sendMessage(message);
 	}
-	
-	@Override
-	public MessagerHandler copy() 
-	{
-		return copyTo(LogToConsoleHandler::new);
-	}
 }
