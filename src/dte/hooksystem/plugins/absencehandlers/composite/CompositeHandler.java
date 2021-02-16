@@ -65,13 +65,6 @@ public class CompositeHandler implements PluginAbsenceHandler, Iterable<PluginAb
 		return Collections.unmodifiableCollection(deep ? getAllHandlers() : this.handlers);
 	}
 
-	/*@Override
-	public void accept(HandlerVisitor visitor) 
-	{
-		this.handlers.forEach(visitor::visit);
-		visitor.visit(this);
-	}*/
-
 	//the returned list is created by a recursive search for every nested handler within this composite
 	private Collection<PluginAbsenceHandler> getAllHandlers()
 	{

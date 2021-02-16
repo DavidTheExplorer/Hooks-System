@@ -12,6 +12,4 @@ public interface PluginAbsenceHandler
 	void handle(PluginHook failedHook);
 	
 	PluginAbsenceHandler copy();
-	
-	//void accept(HandlerVisitor visitor);
 }
