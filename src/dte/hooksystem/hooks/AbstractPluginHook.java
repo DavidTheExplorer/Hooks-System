@@ -1,10 +1,6 @@
 package dte.hooksystem.hooks;
 
 import java.util.Objects;
-import java.util.Optional;
-
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 
 /**
  * This class provides the basic structure for Hooks Implementations. 
@@ -19,12 +15,10 @@ import org.bukkit.plugin.Plugin;
 public abstract class AbstractPluginHook implements PluginHook
 {
 	private final String pluginName;
-	private final Plugin plugin;
 
 	public AbstractPluginHook(String pluginName)
 	{
 		this.pluginName = pluginName;
-		this.plugin = Bukkit.getPluginManager().getPlugin(pluginName);
 	}
 
 	@Override
@@ -32,13 +26,7 @@ public abstract class AbstractPluginHook implements PluginHook
 	{
 		return this.pluginName;
 	}
-
-	@Override
-	public Optional<Plugin> getPlugin() 
-	{
-		return Optional.ofNullable(this.plugin);
-	}
-
+	
 	@Override
 	public int hashCode()
 	{

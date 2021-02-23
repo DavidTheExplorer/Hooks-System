@@ -15,13 +15,6 @@ import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
 public interface IHookService
 {
 	/**
-	 * Returns the plugin this service serves.
-	 * 
-	 * @return This service's owning plugin.
-	 */
-	Plugin getOwningPlugin();
-	
-	/**
 	 * Registers the provided {@code hook} as <i>supported</i> by the plugin that owns this service, and initializes it.
 	 * 
 	 * @param hook The hook to register.
@@ -82,4 +75,11 @@ public interface IHookService
 	 * @return How many hooks were registered in this service.
 	 */
 	int hooksAmount();
+	
+	/**
+	 * Returns the plugin this service serves.
+	 * 
+	 * @return This service's owning plugin.
+	 */
+	Plugin getOwningPlugin();
 }
