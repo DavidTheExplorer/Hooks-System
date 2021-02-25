@@ -7,30 +7,31 @@ import org.bukkit.entity.Player;
 
 import dte.hooksystem.exampleplugin.permissions.LuckPermsPermissionsManager;
 import dte.hooksystem.exampleplugin.permissions.PermissionsManager;
-import dte.hooksystem.hooks.ServicedHook;
+import dte.hooksystem.hooks.AbstractPluginHook;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
 
-public class LuckPermsHook extends ServicedHook<LuckPerms> implements PermissionsManagerHook
+public class LuckPermsHook extends AbstractPluginHook implements PermissionsManagerHook
 {
-	private LuckPermsPermissionsManager permissionsManager;
-
+	private LuckPerms luckPerms;
+	private LuckPermsPermissionsManager permissionsManager; //see permissions package
+	
 	public LuckPermsHook()
 	{
-		//determine the hook's plugin(by its name) and the service's class
-		super("LuckPerms", LuckPerms.class);
+		//determine the hook's plugin(by its name)
+		super("LuckPerms");
 	}
-
+	
 	@Override
 	public void init() throws Exception
 	{
 		//This method runs once the library verified that LuckPerms is on the server
 		//Since we're inside it - It's safe to access its API
 		
-		super.init(); //inits the LuckPerms object from Bukkit's ServicesManager 
+		this.luckPerms = queryProvider(LuckPerms.class);
 		this.permissionsManager = new LuckPermsPermissionsManager(this);
 	}
-
+	
 	@Override
 	public PermissionsManager getPermissionsManager() 
 	{
@@ -45,12 +46,12 @@ public class LuckPermsHook extends ServicedHook<LuckPerms> implements Permission
 		Player player = Bukkit.getPlayer(playerUUID);
 
 		if(player != null)
-			return this.serviced.getPlayerAdapter(Player.class).getUser(player);
+			return this.luckPerms.getPlayerAdapter(Player.class).getUser(player);
 		else
-			return this.serviced.getUserManager().loadUser(playerUUID).join();
+			return this.luckPerms.getUserManager().loadUser(playerUUID).join();
 	}
 	public boolean groupExists(String groupName) 
 	{
-		return this.serviced.getGroupManager().getGroup(groupName) != null;
+		return this.luckPerms.getGroupManager().getGroup(groupName) != null;
 	}
 }
