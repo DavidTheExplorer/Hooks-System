@@ -2,6 +2,9 @@ package dte.hooksystem.hooks;
 
 import java.util.Objects;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.RegisteredServiceProvider;
+
 /**
  * This class provides the basic structure for Hooks Implementations. 
  * <p>
@@ -25,6 +28,13 @@ public abstract class AbstractPluginHook implements PluginHook
 	public String getPluginName()
 	{
 		return this.pluginName;
+	}
+	
+	protected <T> T queryProvider(Class<T> providerClass) 
+	{
+		RegisteredServiceProvider<T> registration = Bukkit.getServicesManager().getRegistration(providerClass);
+		
+		return registration == null ? null : registration.getProvider();
 	}
 	
 	@Override
