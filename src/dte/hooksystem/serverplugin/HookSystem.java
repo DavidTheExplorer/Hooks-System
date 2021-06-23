@@ -1,12 +1,11 @@
 package dte.hooksystem.serverplugin;
 
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.java.JavaPlugin;
 
+import dte.hooksystem.utils.ModernJavaPlugin;
 import dte.hooksystem.utils.OnlineOperators;
-import dte.hooksystem.utils.PluginUtils;
 
-public class HookSystem extends JavaPlugin
+public class HookSystem extends ModernJavaPlugin
 {
 	private static HookSystem INSTANCE;
 	
@@ -17,7 +16,7 @@ public class HookSystem extends JavaPlugin
 		
 		OnlineOperators.init();
 		
-		PluginUtils.logToConsole(this, ChatColor.GREEN + "Listening to incoming Plugins' Hooks...");
+		logToConsole(ChatColor.GREEN + "Listening to incoming Plugins' Hooks...");
 	}
 	
 	public static HookSystem getInstance()

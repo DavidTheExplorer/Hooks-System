@@ -33,7 +33,7 @@ public class OnlineOperators
 				.collect(toSet());
 		
 		//Register the listeners of the amount's modification
-		Bukkit.getPluginManager().registerEvents(new OperatorsUpdateListeners(), HookSystem.getInstance());
+		HookSystem.getInstance().registerListeners(new OperatorsUpdateListeners());
 	}
 	public static void forOperators(Consumer<Player> operatorsAction) 
 	{
