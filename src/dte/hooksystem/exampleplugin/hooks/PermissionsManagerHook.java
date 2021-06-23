@@ -1,18 +1,19 @@
 package dte.hooksystem.exampleplugin.hooks;
 
 import dte.hooksystem.exampleplugin.permissions.PermissionsManager;
+import dte.hooksystem.hooks.PluginHook;
 
 /**
- * Marks the implementing hook as a Permissions Manager Hook(such as LuckPerms, GroupManager, etc).
+ * Represents a hook of a Permissions Manager plugin(LuckPerms, GroupManager, etc).
  * <p>
- * This class is how we combine the plugin's PermissionsManager interface with the Hooks Library; It enables us to call: 
+ * Later, we can get this instance by calling:
  * <pre>
- * PermissionsManager manager = hookService
+ * PermissionsManagerHook hook = hookService
  *     .findHooksOf(PermissionsManagerHook.class, someConflictHandler)
  *     .orElse(null);
  * </pre>
  */
-public interface PermissionsManagerHook
+public interface PermissionsManagerHook extends PluginHook
 {
 	PermissionsManager getPermissionsManager();
 }

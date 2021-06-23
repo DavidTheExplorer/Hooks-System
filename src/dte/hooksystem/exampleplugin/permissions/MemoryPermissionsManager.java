@@ -2,6 +2,7 @@ package dte.hooksystem.exampleplugin.permissions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
 
@@ -18,15 +19,11 @@ public class MemoryPermissionsManager implements PermissionsManager
 	@Override
 	public String getPlayerGroupName(UUID playerUUID) 
 	{
-		for(Map.Entry<String, Set<UUID>> entry : this.groupsMembers.entrySet()) 
-		{
-			String groupName = entry.getKey();
-			Set<UUID> groupMembers = entry.getValue();
-			
-			if(groupMembers.contains(playerUUID))
-				return groupName;
-		}
-		return null;
+		return this.groupsMembers.entrySet().stream()
+				.filter(entry -> entry.getValue().contains(playerUUID))
+				.findFirst()
+				.map(Entry::getKey)
+				.orElse(null);
 	}
 	
 	@Override

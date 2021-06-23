@@ -18,15 +18,14 @@ public class LuckPermsHook extends AbstractPluginHook implements PermissionsMana
 	
 	public LuckPermsHook()
 	{
-		//determine the hook's plugin(by its name)
 		super("LuckPerms");
 	}
 	
 	@Override
 	public void init() throws Exception
 	{
-		//This method runs once the library verified that LuckPerms is on the server
-		//Since we're inside it - It's safe to access its API
+		//This method runs once the library verified that LuckPerms is on the server.
+		//Since we're inside it - It's safe to access its API.
 		
 		this.luckPerms = queryProvider(LuckPerms.class);
 		this.permissionsManager = new LuckPermsPermissionsManager(this);
