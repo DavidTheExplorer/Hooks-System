@@ -24,7 +24,7 @@ import dte.hooksystem.exampleplugin.listeners.DisplayGroupListener;
 import dte.hooksystem.exampleplugin.listeners.DisplayRegionListener;
 import dte.hooksystem.exampleplugin.permissions.MemoryPermissionsManager;
 import dte.hooksystem.exampleplugin.permissions.PermissionsManager;
-import dte.hooksystem.hooks.service.IHookService;
+import dte.hooksystem.hooks.service.HookService;
 
 public class ExamplePlugin extends JavaPlugin
 {
@@ -34,7 +34,7 @@ public class ExamplePlugin extends JavaPlugin
 	public void onEnable()
 	{
 		//Each plugin that uses this library has its own HookService
-		IHookService hookService = HookSystemAPI.createHookService(this);
+		HookService hookService = HookSystemAPI.createHookService(this);
 
 		//Registers the hooks of WorldGuard and LuckPerms (Suggestion: always static import MissingHandlersFactory)
 		hookService.register(new WorldGuardHook(), logErrorToConsole(withPluginPrefix(this), "WorldGuard wasn't found on this server! It won't be used."));
@@ -55,7 +55,7 @@ public class ExamplePlugin extends JavaPlugin
 		.collect(groupingBy(player -> this.permissionsManager.getPlayerGroupName(player.getUniqueId())))
 		.forEach(this::displayGroup);
 	}
-	private Optional<PermissionsManager> findPermissionsManager(IHookService hookService)
+	private Optional<PermissionsManager> findPermissionsManager(HookService hookService)
 	{
 		return hookService
 				.findHookOf(PermissionsManagerHook.class, managers -> 
