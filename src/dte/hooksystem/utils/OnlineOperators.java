@@ -17,75 +17,45 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import dte.hooksystem.serverplugin.HookSystem;
 
-public class OnlineOperators 
+public class OnlineOperators implements Listener
 {
 	//Container of static methods
 	private OnlineOperators(){}
-	
-	private static Set<Player> onlineOperators;
-	
-	public static void init() 
+
+	private static Set<Player> onlineOPs;
+
+	static
 	{
-		//Read the current amount of online OPs
-		onlineOperators = Bukkit.getOperators().stream()
+		onlineOPs = Bukkit.getOperators().stream()
 				.filter(OfflinePlayer::isOnline)
 				.map(OfflinePlayer::getPlayer)
 				.collect(toSet());
 		
-		//Register the listeners of the amount's modification
-		HookSystem.getInstance().registerListeners(new OperatorsUpdateListeners());
-	}
-	public static void forOperators(Consumer<Player> operatorsAction) 
-	{
-		verifyInit();
-		
-		onlineOperators.forEach(operatorsAction::accept);
-	}
-	public static int size() 
-	{
-		verifyInit();
-		
-		return onlineOperators.size();
-	}
-	public static Set<Player> get()
-	{
-		verifyInit();
-		
-		return new HashSet<>(onlineOperators);
-	}
-	private static void verifyInit() 
-	{
-		if(OperatorsUpdateListeners.INSTANCE == null)
-			throw new IllegalStateException("Cannot access the OnlineOperators class because it wasn't initialized!");
+		HookSystem.getInstance().registerListeners(new OnlineOperators());
 	}
 	
-	private static class OperatorsUpdateListeners implements Listener
+	public static Set<Player> get()
 	{
-		private static OperatorsUpdateListeners INSTANCE;
-		
-		public OperatorsUpdateListeners() 
-		{
-			INSTANCE = this;
-		}
-		
-		@EventHandler
-		public void registerOnJoin(PlayerJoinEvent event) 
-		{
-			handleEvent(event, onlineOperators::add);
-		}
-		
-		@EventHandler
-		public void deregisterOnLeave(PlayerQuitEvent event) 
-		{
-			handleEvent(event, onlineOperators::remove);
-		}
-		
-		private void handleEvent(PlayerEvent event, Consumer<Player> operatorAction) 
-		{
-			Player player = event.getPlayer();
-			
-			if(player.isOp())
-				operatorAction.accept(player);
-		}
+		return new HashSet<>(onlineOPs);
+	}
+	
+	@EventHandler
+	public void registerOnJoin(PlayerJoinEvent event) 
+	{
+		ifOperatorEvent(event, onlineOPs::add);
+	}
+
+	@EventHandler
+	public void deregisterOnLeave(PlayerQuitEvent event) 
+	{
+		ifOperatorEvent(event, onlineOPs::remove);
+	}
+	
+	private void ifOperatorEvent(PlayerEvent event, Consumer<Player> operatorAction) 
+	{
+		Player player = event.getPlayer();
+
+		if(player.isOp())
+			operatorAction.accept(player);
 	}
 }
