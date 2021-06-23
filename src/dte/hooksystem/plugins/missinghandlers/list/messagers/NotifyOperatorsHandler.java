@@ -21,6 +21,6 @@ public class NotifyOperatorsHandler extends MessagerHandler
 	
 	private void notifyOperators(String... messages) 
 	{
-		OnlineOperators.forOperators(operator -> operator.sendMessage(messages));
+		OnlineOperators.get().forEach(operator -> operator.sendMessage(messages));
 	}
 }
