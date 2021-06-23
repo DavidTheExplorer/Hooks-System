@@ -6,12 +6,12 @@ import static dte.hooksystem.plugins.missinghandlers.factory.MissingHandlersFact
 import static dte.hooksystem.plugins.missinghandlers.factory.MissingHandlersFactory.MessageStylesFactory.withPluginPrefix;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
+import static org.bukkit.ChatColor.RED;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -60,7 +60,7 @@ public class ExamplePlugin extends JavaPlugin
 		return hookService
 				.findHookOf(PermissionsManagerHook.class, managers -> 
 				{
-					Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "CONFLICT: More than one Permissions Manager was detected! Closing the plugin...");
+					Bukkit.getConsoleSender().sendMessage(RED + "CONFLICT: More than one Permissions Manager was detected! Closing the plugin...");
 					Bukkit.getPluginManager().disablePlugin(this);
 				})
 				.map(PermissionsManagerHook::getPermissionsManager);
