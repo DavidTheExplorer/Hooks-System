@@ -1,7 +1,8 @@
 package dte.hooksystem.exampleplugin.listeners;
 
+import static org.bukkit.ChatColor.YELLOW;
+
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,8 +28,8 @@ public class DisplayRegionListener implements Listener
 		ProtectedRegion playerRegion = this.worldGuardHook.getPlayerRegion(player);
 		
 		if(playerRegion != null)
-			Bukkit.broadcastMessage(String.format(ChatColor.YELLOW + "%s has left the server at %s", player.getName(), playerRegion.getId()));
+			Bukkit.broadcastMessage(String.format(YELLOW + "%s has left the server at %s", player.getName(), playerRegion.getId()));
 		else
-			Bukkit.broadcastMessage(String.format(ChatColor.YELLOW + "%s has left the server, and they weren't in a region.", player.getName()));
+			Bukkit.broadcastMessage(String.format(YELLOW + "%s has left the server, and they weren't in a region.", player.getName()));
 	}
 }

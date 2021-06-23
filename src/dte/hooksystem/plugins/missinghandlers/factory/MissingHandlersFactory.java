@@ -1,13 +1,13 @@
 package dte.hooksystem.plugins.missinghandlers.factory;
 
 import static dte.hooksystem.messagestyle.MessageStyle.RAW;
+import static org.bukkit.ChatColor.RED;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.hooks.PluginHook;
@@ -48,14 +48,14 @@ public class MissingHandlersFactory
 	{
 		//"Error" means that the messages become red
 		MessageStyle redStyle = new MessageStyle()
-				.withFinalTouch(message -> ChatColor.RED + message);
+				.withFinalTouch(message -> RED + message);
 
 		return logToConsole(redStyle, messages);
 	}
 	public static MissingPluginHandler logErrorToConsole(MessageStyle style, String... messages) 
 	{
 		//"Error" means that the messages become red
-		MessageStyle redStyle = style.withFinalTouch(message -> ChatColor.RED + message);
+		MessageStyle redStyle = style.withFinalTouch(message -> RED + message);
 
 		return logToConsole(redStyle, messages);
 	}
