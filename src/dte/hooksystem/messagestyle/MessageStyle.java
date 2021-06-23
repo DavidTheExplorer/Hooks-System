@@ -1,7 +1,7 @@
 package dte.hooksystem.messagestyle;
 
-import static dte.hooksystem.utils.ObjectUtils.getOrDefault;
 import static dte.hooksystem.utils.ObjectUtils.ifNotNull;
+import static org.bukkit.craftbukkit.libs.org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ public class MessageStyle
 {
 	private String prefix, suffix;
 	private final List<UnaryOperator<String>> finalTouches = new ArrayList<>();
-
+	
 	//this instance always returns the given raw message
 	public static final MessageStyle RAW = new MessageStyle();
 
@@ -50,18 +50,18 @@ public class MessageStyle
 	public MessageStyle copy() 
 	{
 		MessageStyle style = new MessageStyle();
-
+		
 		ifNotNull(this.prefix, style::prefixedWith);
 		ifNotNull(this.suffix, style::suffixedWith);
 		this.finalTouches.forEach(style::withFinalTouch);
-
+		
 		return style;
 	}
 	
 	private String buildFinalMessage(String rawMessage) 
 	{
-		String prefix = getOrDefault(this.prefix, "");
-		String suffix = getOrDefault(this.suffix, "");
+		String prefix = defaultIfNull(this.prefix, "");
+		String suffix = defaultIfNull(this.suffix, "");
 
 		return String.format("%s%s%s", prefix, rawMessage, suffix);
 	}
