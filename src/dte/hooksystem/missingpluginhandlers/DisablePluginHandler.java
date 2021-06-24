@@ -1,10 +1,9 @@
-package dte.hooksystem.plugins.missinghandlers.list;
+package dte.hooksystem.missingpluginhandlers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
 
 public class DisablePluginHandler implements MissingPluginHandler
 {

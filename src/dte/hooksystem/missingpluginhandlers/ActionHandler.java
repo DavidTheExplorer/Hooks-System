@@ -1,9 +1,8 @@
-package dte.hooksystem.plugins.missinghandlers.list;
+package dte.hooksystem.missingpluginhandlers;
 
 import java.util.function.Consumer;
 
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
 
 public class ActionHandler implements MissingPluginHandler
 {

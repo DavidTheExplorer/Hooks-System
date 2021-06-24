@@ -11,15 +11,15 @@ import java.util.logging.Logger;
 import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.hooks.PluginHook;
+import dte.hooksystem.plugins.missinghandlers.ActionHandler;
+import dte.hooksystem.plugins.missinghandlers.DisablePluginHandler;
+import dte.hooksystem.plugins.missinghandlers.DoNothingHandler;
+import dte.hooksystem.plugins.missinghandlers.LogToConsoleHandler;
+import dte.hooksystem.plugins.missinghandlers.LoggerMessageHandler;
 import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
 import dte.hooksystem.plugins.missinghandlers.composite.CompositeHandler;
 import dte.hooksystem.plugins.missinghandlers.composite.CompositeHandlerOptions;
-import dte.hooksystem.plugins.missinghandlers.list.ActionHandler;
-import dte.hooksystem.plugins.missinghandlers.list.DisablePluginHandler;
-import dte.hooksystem.plugins.missinghandlers.list.DoNothingHandler;
-import dte.hooksystem.plugins.missinghandlers.list.messagers.LogToConsoleHandler;
-import dte.hooksystem.plugins.missinghandlers.list.messagers.LoggerMessageHandler;
-import dte.hooksystem.plugins.missinghandlers.list.messagers.MessagerHandler;
+import dte.hooksystem.plugins.missinghandlers.messager.MessagerHandler;
 import dte.hooksystem.utils.MessageStyle;
 
 public class MissingHandlersFactory

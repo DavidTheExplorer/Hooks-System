@@ -1,6 +1,7 @@
-package dte.hooksystem.plugins.missinghandlers.list.messagers;
+package dte.hooksystem.missingpluginhandlers;
 
 import dte.hooksystem.hooks.PluginHook;
+import dte.hooksystem.missingpluginhandlers.messager.MessagerHandler;
 import dte.hooksystem.utils.OnlineOperators;
 
 public class NotifyOperatorsHandler extends MessagerHandler

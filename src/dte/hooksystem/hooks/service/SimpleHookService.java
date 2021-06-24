@@ -13,7 +13,7 @@ import dte.hooksystem.exceptions.HookInitException;
 import dte.hooksystem.exceptions.PluginAlreadyHookedException;
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.hooks.repository.HookRepository;
-import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
+import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
 
 public class SimpleHookService implements HookService
 {
