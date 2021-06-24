@@ -1,6 +1,6 @@
 package dte.hooksystem.plugins.missinghandlers.factory;
 
-import static dte.hooksystem.messagestyle.MessageStyle.RAW;
+import static dte.hooksystem.utils.MessageStyle.RAW;
 import static org.bukkit.ChatColor.RED;
 
 import java.util.Arrays;
@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.messagestyle.MessageStyle;
 import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
 import dte.hooksystem.plugins.missinghandlers.composite.CompositeHandler;
 import dte.hooksystem.plugins.missinghandlers.composite.CompositeHandlerOptions;
@@ -21,6 +20,7 @@ import dte.hooksystem.plugins.missinghandlers.list.DoNothingHandler;
 import dte.hooksystem.plugins.missinghandlers.list.messagers.LogToConsoleHandler;
 import dte.hooksystem.plugins.missinghandlers.list.messagers.LoggerMessageHandler;
 import dte.hooksystem.plugins.missinghandlers.list.messagers.MessagerHandler;
+import dte.hooksystem.utils.MessageStyle;
 
 public class MissingHandlersFactory
 {
