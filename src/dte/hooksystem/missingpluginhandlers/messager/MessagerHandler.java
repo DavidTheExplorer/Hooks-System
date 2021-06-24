@@ -1,11 +1,11 @@
-package dte.hooksystem.plugins.missinghandlers.list.messagers;
+package dte.hooksystem.missingpluginhandlers.messager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
+import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
 
 public abstract class MessagerHandler implements MissingPluginHandler
 {

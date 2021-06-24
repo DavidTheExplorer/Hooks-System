@@ -3,8 +3,8 @@ package dte.hooksystem.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
-import dte.hooksystem.plugins.missinghandlers.composite.CompositeHandler;
+import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
+import dte.hooksystem.missingpluginhandlers.composite.CompositeHandler;
 
 public class MissingHandlersUtilities 
 {

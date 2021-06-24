@@ -1,4 +1,4 @@
-package dte.hooksystem.plugins.missinghandlers;
+package dte.hooksystem.missingpluginhandlers;
 
 import dte.hooksystem.hooks.PluginHook;
 

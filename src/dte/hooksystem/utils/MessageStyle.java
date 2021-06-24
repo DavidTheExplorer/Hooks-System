@@ -1,4 +1,4 @@
-package dte.hooksystem.messagestyle;
+package dte.hooksystem.utils;
 
 import static dte.hooksystem.utils.ObjectUtils.ifNotNull;
 import static org.bukkit.craftbukkit.libs.org.apache.commons.lang3.ObjectUtils.defaultIfNull;

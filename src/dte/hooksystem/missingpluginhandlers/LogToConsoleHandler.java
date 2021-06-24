@@ -1,6 +1,8 @@
-package dte.hooksystem.plugins.missinghandlers.list.messagers;
+package dte.hooksystem.missingpluginhandlers;
 
 import org.bukkit.Bukkit;
+
+import dte.hooksystem.missingpluginhandlers.messager.MessagerHandler;
 
 public class LogToConsoleHandler extends MessagerHandler
 {
