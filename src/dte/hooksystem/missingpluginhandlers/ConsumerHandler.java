@@ -4,11 +4,11 @@ import java.util.function.Consumer;
 
 import dte.hooksystem.hooks.PluginHook;
 
-public class ActionHandler implements MissingPluginHandler
+public class ConsumerHandler implements MissingPluginHandler
 {
 	private final Consumer<PluginHook> action;
 
-	public ActionHandler(Consumer<PluginHook> action) 
+	public ConsumerHandler(Consumer<PluginHook> action) 
 	{
 		this.action = action;
 	}

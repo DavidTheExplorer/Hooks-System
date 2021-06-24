@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.missingpluginhandlers.ActionHandler;
+import dte.hooksystem.missingpluginhandlers.ConsumerHandler;
 import dte.hooksystem.missingpluginhandlers.DisablePluginHandler;
 import dte.hooksystem.missingpluginhandlers.DoNothingHandler;
 import dte.hooksystem.missingpluginhandlers.LogToConsoleHandler;
@@ -81,7 +81,7 @@ public class MissingHandlersFactory
 	 */
 	public static MissingPluginHandler run(Consumer<PluginHook> action)
 	{
-		return new ActionHandler(action);
+		return new ConsumerHandler(action);
 	}
 	public static MissingPluginHandler disablePlugin(Plugin plugin) 
 	{
