@@ -1,4 +1,4 @@
-package dte.hooksystem.plugins.missinghandlers.composite;
+package dte.hooksystem.missingpluginhandlers.composite;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,7 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.plugins.missinghandlers.MissingPluginHandler;
+import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
 import dte.hooksystem.utils.ArrayUtils;
 
 public class CompositeHandler implements MissingPluginHandler, Iterable<MissingPluginHandler>
