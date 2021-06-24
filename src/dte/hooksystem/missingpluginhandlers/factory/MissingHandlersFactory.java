@@ -28,23 +28,23 @@ public class MissingHandlersFactory
 	private MissingHandlersFactory(){}
 	
 	//Cached Stateless Handlers
-	public static final MissingPluginHandler DO_NOTHING = new DoNothingHandler();
+	public static final DoNothingHandler DO_NOTHING = new DoNothingHandler();
 	
 	/*
 	 * Console
 	 */
-	public static MissingPluginHandler logToConsole(String... messages)
+	public static LogToConsoleHandler logToConsole(String... messages)
 	{
 		return logToConsole(RAW, messages);
 	}
-	public static MissingPluginHandler logToConsole(MessageStyle style, String... messages) 
+	public static LogToConsoleHandler logToConsole(MessageStyle style, String... messages) 
 	{
 		LogToConsoleHandler handler = new LogToConsoleHandler();
 		addStyledMessages(handler, style, messages);
 
 		return handler;
 	}
-	public static MissingPluginHandler logErrorToConsole(String... messages) 
+	public static LogToConsoleHandler logErrorToConsole(String... messages) 
 	{
 		//"Error" means that the messages become red
 		MessageStyle redStyle = new MessageStyle()
@@ -52,7 +52,7 @@ public class MissingHandlersFactory
 
 		return logToConsole(redStyle, messages);
 	}
-	public static MissingPluginHandler logErrorToConsole(MessageStyle style, String... messages) 
+	public static LogToConsoleHandler logErrorToConsole(MessageStyle style, String... messages) 
 	{
 		//"Error" means that the messages become red
 		MessageStyle redStyle = style.withFinalTouch(message -> RED + message);
@@ -63,14 +63,14 @@ public class MissingHandlersFactory
 	/*
 	 * java.util.logging.Logger
 	 */
-	public static MissingPluginHandler log(Logger logger, Level logLevel, MessageStyle style, String... messages) 
+	public static LoggerMessageHandler log(Logger logger, Level logLevel, MessageStyle style, String... messages) 
 	{
 		LoggerMessageHandler handler = new LoggerMessageHandler(logger, logLevel);
 		addStyledMessages(handler, style, messages);
 		
 		return handler;
 	}
-	public static MissingPluginHandler log(Logger logger, Level logLevel, String... messages) 
+	public static LoggerMessageHandler log(Logger logger, Level logLevel, String... messages) 
 	{
 		return log(logger, logLevel, RAW, messages);
 	}
@@ -79,11 +79,11 @@ public class MissingHandlersFactory
 	/*
 	 * General
 	 */
-	public static MissingPluginHandler run(Consumer<PluginHook> action)
+	public static ConsumerHandler run(Consumer<PluginHook> action)
 	{
 		return new ConsumerHandler(action);
 	}
-	public static MissingPluginHandler disablePlugin(Plugin plugin) 
+	public static DisablePluginHandler disablePlugin(Plugin plugin) 
 	{
 		return new DisablePluginHandler(plugin);
 	}
