@@ -6,10 +6,10 @@ import java.util.List;
 import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
 import dte.hooksystem.missingpluginhandlers.composite.CompositeHandler;
 
-public class MissingHandlersUtilities 
+public class MissingHandlersUtils
 {
 	//Container of static methods
-	private MissingHandlersUtilities(){}
+	private MissingHandlersUtils(){}
 	
 	public static boolean isInstance(MissingPluginHandler handler, Class<?> classz) 
 	{
@@ -21,8 +21,7 @@ public class MissingHandlersUtilities
 			CompositeHandler compositeHandler = (CompositeHandler) handler;
 			
 			//recursively search through the composite for an handler that is an instance of the provided class
-			return compositeHandler.getHandlersView(false).stream()
-					.anyMatch(encapsulatedHandler -> isInstance(encapsulatedHandler, classz));
+			return compositeHandler.getHandlers(false).stream().anyMatch(encapsulatedHandler -> isInstance(encapsulatedHandler, classz));
 		}
 		return false;
 	}
@@ -49,10 +48,5 @@ public class MissingHandlersUtilities
 			for(MissingPluginHandler encapsulatedHandler : compositeHandler) 
 				addClassHandlers(encapsulatedHandler, hookClass, handlersList);
 		}
-	}
-	
-	public static Runnable toRunnable(MissingPluginHandler handler) 
-	{
-		return () -> handler.handle(null);
 	}
 }

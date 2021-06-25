@@ -2,7 +2,6 @@ package dte.hooksystem.missingpluginhandlers.composite;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -47,9 +46,9 @@ public class CompositeHandler implements MissingPluginHandler, Iterable<MissingP
 		return getAllHandlers().iterator();
 	}
 	
-	public Collection<MissingPluginHandler> getHandlersView(boolean deep)
+	public Collection<MissingPluginHandler> getHandlers(boolean deep)
 	{
-		return Collections.unmodifiableCollection(deep ? getAllHandlers() : this.handlers);
+		return new ArrayList<>(deep ? getAllHandlers() : this.handlers);
 	}
 
 	//the returned list is created by a recursive search for every nested handler within this composite
@@ -60,6 +59,7 @@ public class CompositeHandler implements MissingPluginHandler, Iterable<MissingP
 
 		return allHandlers;
 	}
+	
 	private static void addAllHandlers(MissingPluginHandler currentHandler, Collection<MissingPluginHandler> handlersList)
 	{
 		if(!(currentHandler instanceof CompositeHandler))
@@ -68,7 +68,7 @@ public class CompositeHandler implements MissingPluginHandler, Iterable<MissingP
 			return;
 		}
 		CompositeHandler compositeHandler = (CompositeHandler) currentHandler;
-
+		
 		for(MissingPluginHandler encapsulatedHandler : compositeHandler.handlers) 
 			addAllHandlers(encapsulatedHandler, handlersList);
 	}

@@ -82,7 +82,7 @@ public class MissingHandlersFactory
 	{
 		return new DisablePluginHandler(plugin);
 	}
-	public static MissingPluginHandler handleInOrder(MissingPluginHandler... handlers)
+	public static MissingPluginHandler byOrder(MissingPluginHandler... handlers)
 	{
 		return CompositeHandler.of(handlers);
 	}
