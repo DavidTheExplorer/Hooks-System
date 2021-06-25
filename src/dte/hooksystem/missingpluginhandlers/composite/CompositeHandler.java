@@ -3,7 +3,6 @@ package dte.hooksystem.missingpluginhandlers.composite;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -20,9 +19,9 @@ public class CompositeHandler implements MissingPluginHandler, Iterable<MissingP
 	{
 		this.handlers = handlers;
 	}
-	public static CompositeHandler of(CompositeHandlerOptions options, MissingPluginHandler... handlers) 
+	public static CompositeHandler of(MissingPluginHandler... handlers) 
 	{
-		Collection<MissingPluginHandler> finalHandlers = ArrayUtils.toCollection(handlers, options.usesFIFO() ? HashSet::new : LinkedHashSet::new);
+		Collection<MissingPluginHandler> finalHandlers = ArrayUtils.toCollection(handlers, LinkedHashSet::new);
 
 		return new CompositeHandler(finalHandlers);
 	}

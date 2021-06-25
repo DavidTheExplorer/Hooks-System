@@ -18,7 +18,6 @@ import dte.hooksystem.missingpluginhandlers.LogToConsoleHandler;
 import dte.hooksystem.missingpluginhandlers.LoggerMessageHandler;
 import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
 import dte.hooksystem.missingpluginhandlers.composite.CompositeHandler;
-import dte.hooksystem.missingpluginhandlers.composite.CompositeHandlerOptions;
 import dte.hooksystem.missingpluginhandlers.messager.MessagerHandler;
 import dte.hooksystem.utils.MessageStyle;
 
@@ -85,7 +84,7 @@ public class MissingHandlersFactory
 	}
 	public static MissingPluginHandler handleInOrder(MissingPluginHandler... handlers)
 	{
-		return CompositeHandler.of(CompositeHandlerOptions.FIFO, handlers);
+		return CompositeHandler.of(handlers);
 	}
 	public static ConsumerHandler run(Consumer<PluginHook> action)
 	{
