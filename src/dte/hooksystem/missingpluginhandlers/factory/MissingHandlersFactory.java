@@ -79,10 +79,6 @@ public class MissingHandlersFactory
 	/*
 	 * General
 	 */
-	public static ConsumerHandler run(Consumer<PluginHook> action)
-	{
-		return new ConsumerHandler(action);
-	}
 	public static DisablePluginHandler disablePlugin(Plugin plugin) 
 	{
 		return new DisablePluginHandler(plugin);
@@ -90,6 +86,14 @@ public class MissingHandlersFactory
 	public static MissingPluginHandler handleInOrder(MissingPluginHandler... handlers)
 	{
 		return CompositeHandler.of(CompositeHandlerOptions.FIFO, handlers);
+	}
+	public static ConsumerHandler run(Consumer<PluginHook> action)
+	{
+		return new ConsumerHandler(action);
+	}
+	public static ConsumerHandler run(Runnable code) 
+	{
+		return new ConsumerHandler(failedHook -> code.run());
 	}
 	
 	private static void addStyledMessages(MessagerHandler handler, MessageStyle style, String... messages) 
