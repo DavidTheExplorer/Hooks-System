@@ -15,7 +15,7 @@ public class NotifyOperatorsHandler extends MessagerHandler
 	}
 	
 	@Override
-	public void sendMessage(String message) 
+	protected void sendMessage(String message) 
 	{
 		notifyOperators(message);
 	}
