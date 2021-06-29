@@ -11,13 +11,13 @@ import java.util.logging.Logger;
 import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.hooks.PluginHook;
+import dte.hooksystem.missingpluginhandlers.CompositeHandler;
 import dte.hooksystem.missingpluginhandlers.ConsumerHandler;
 import dte.hooksystem.missingpluginhandlers.DisablePluginHandler;
 import dte.hooksystem.missingpluginhandlers.DoNothingHandler;
 import dte.hooksystem.missingpluginhandlers.LogToConsoleHandler;
 import dte.hooksystem.missingpluginhandlers.LoggerMessageHandler;
 import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
-import dte.hooksystem.missingpluginhandlers.composite.CompositeHandler;
 import dte.hooksystem.missingpluginhandlers.messager.MessagerHandler;
 import dte.hooksystem.utils.MessageStyle;
 
