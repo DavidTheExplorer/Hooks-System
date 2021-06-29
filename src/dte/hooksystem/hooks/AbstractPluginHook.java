@@ -6,12 +6,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 /**
- * This class provides the basic structure for Hooks Implementations. 
+ * This class provides a convenient skeletal implementation for {@link PluginHook}.
  * <p>
- * Extension Instructions:
+ * How to extend:
  * <ul>
- * 	<li>super the constructor with a plugin's name(don't do anything else there!)</li>
- * 	<li>Optional: Override the {@code init()} method to setup the hook(safe because the method runs after it was verified the plugin exists)</li>
+ * 	<li>super the constructor with a plugin's name.</li>
+ * 	<li>Override {@code init()} if you want to setup the hook(<b>Don't</b> use the constructor to access the plugin's API. this method runs only if the plugin is on the server)</li>
  * 	<li>Add any useful methods you want :)</li>
  * </ul>
  */

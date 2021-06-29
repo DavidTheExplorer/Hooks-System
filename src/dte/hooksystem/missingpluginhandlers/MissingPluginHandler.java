@@ -5,9 +5,9 @@ import dte.hooksystem.hooks.PluginHook;
 public interface MissingPluginHandler
 {
 	/**
-	 * Runs when the specified {@code hook} couldn't be registered because its plugin is missing in the server.
+	 * Runs when the provided {@code hook} couldn't be registered, because the plugin it represents is not on the server.
 	 * 
-	 * @param failedHook The hook that failed to be registered.
+	 * @param failedHook The hook whose plugin is not on the server.
 	 */
 	void handle(PluginHook failedHook);
 }

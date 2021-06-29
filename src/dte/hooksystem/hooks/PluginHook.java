@@ -1,15 +1,15 @@
 package dte.hooksystem.hooks;
 
 /**
- * Represents a safe functionality wrapper of a certain plugin;
- * Implementations should expose <i>public</i> methods - which encapsulates the internal plugin's data.
+ * Represents a functionality wrapper of a certain plugin.
+ * Implementors expose <i>public</i> methods in order to encapsulate the internal plugin's data.
  * <p>
- * The suggested name for implementations is <i>pluginName</i>Hook (e.g EssentialsHook, WorldEditHook).
+ * The suggested name for implementors is: <i>pluginName</i>Hook (e.g EssentialsHook, WorldEditHook).
  */
 public interface PluginHook
 {
 	/**
-	 * Returns the name of the plugin this hook <i>hooks to</i>(or technically just wraps its functionality).
+	 * Returns the name of the plugin this hook represents.
 	 * 
 	 * @return The hooked plugin's name.
 	 */
@@ -26,11 +26,15 @@ public interface PluginHook
 	}
 
 	/** 
-	 * The only place where it's safe to(and the developer is supposed to) initialize stuff from the plugin's code(<i>e.g.</i> Storing the API instance).
+	 * The only place where it's safe to(and the developer is supposed to) initialize stuff from the plugin's API(<i>e.g.</i> storing the API instance).
 	 * <p>
 	 * If an Exception was thrown from this method, it would be caught and be friendly displayed in the Console.
 	 * 
 	 * @throws Exception if any Exception was thrown.
 	 */
 	default void init() throws Exception{}
+	
+	boolean equals(Object object);
+	
+	int hashCode();
 }
