@@ -29,7 +29,7 @@ public abstract class MessagerHandler implements MissingPluginHandler
 				.map(message -> injectHookInfo(message, failedHook))
 				.toArray(String[]::new);
 	}
-	public abstract void sendMessage(String message);
+	protected abstract void sendMessage(String message);
 	
 	
 	private String injectHookInfo(String text, PluginHook failedHook) 
