@@ -2,6 +2,7 @@ package dte.hooksystem.missingpluginhandlers;
 
 import dte.hooksystem.hooks.PluginHook;
 
+@FunctionalInterface
 public interface MissingPluginHandler
 {
 	/**

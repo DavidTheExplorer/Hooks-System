@@ -12,7 +12,6 @@ import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.missingpluginhandlers.CompositeHandler;
-import dte.hooksystem.missingpluginhandlers.ConsumerHandler;
 import dte.hooksystem.missingpluginhandlers.DisablePluginHandler;
 import dte.hooksystem.missingpluginhandlers.DoNothingHandler;
 import dte.hooksystem.missingpluginhandlers.LogToConsoleHandler;
@@ -86,13 +85,13 @@ public class MissingHandlersFactory
 	{
 		return CompositeHandler.of(handlers);
 	}
-	public static ConsumerHandler run(Consumer<PluginHook> action)
+	public static MissingPluginHandler run(Consumer<PluginHook> action)
 	{
-		return new ConsumerHandler(action);
+		return action::accept;
 	}
-	public static ConsumerHandler run(Runnable code) 
+	public static MissingPluginHandler run(Runnable code) 
 	{
-		return new ConsumerHandler(failedHook -> code.run());
+		return failedHook -> code.run();
 	}
 	
 	private static void addStyledMessages(MessagerHandler handler, MessageStyle style, String... messages) 
