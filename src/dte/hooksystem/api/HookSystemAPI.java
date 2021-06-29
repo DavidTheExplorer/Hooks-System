@@ -2,9 +2,8 @@ package dte.hooksystem.api;
 
 import org.bukkit.plugin.Plugin;
 
-import dte.hooksystem.hooks.repository.SimpleHookRepository;
-import dte.hooksystem.hooks.service.HookService;
-import dte.hooksystem.hooks.service.SimpleHookService;
+import dte.hooksystem.service.HookService;
+import dte.hooksystem.service.SimpleHookService;
 
 public class HookSystemAPI 
 {
@@ -12,14 +11,13 @@ public class HookSystemAPI
 	private HookSystemAPI(){}
 	
 	/**
-	 * Creates a service responsible for the hooks of the given {@code plugin};
-	 * Its responsibilities are registering and retrieving the hooks of the plugin.
+	 * Creates a service responsible for managing the hooks of the given {@code plugin}.
 	 * 
-	 * @param owningPlugin The plugin which will own the service.
+	 * @param owningPlugin The plugin which the created service serves.
 	 * @return The hooks manager instance of the provided {@code plugin}.
 	 */
 	public static HookService createHookService(Plugin owningPlugin) 
 	{
-		return new SimpleHookService(owningPlugin, new SimpleHookRepository());
+		return new SimpleHookService(owningPlugin);
 	}
 }
