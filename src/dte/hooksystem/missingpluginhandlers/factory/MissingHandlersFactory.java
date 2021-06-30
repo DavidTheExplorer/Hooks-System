@@ -13,7 +13,6 @@ import org.bukkit.plugin.Plugin;
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.missingpluginhandlers.CompositeHandler;
 import dte.hooksystem.missingpluginhandlers.DisablePluginHandler;
-import dte.hooksystem.missingpluginhandlers.DoNothingHandler;
 import dte.hooksystem.missingpluginhandlers.LogToConsoleHandler;
 import dte.hooksystem.missingpluginhandlers.LoggerMessageHandler;
 import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
@@ -26,7 +25,7 @@ public class MissingHandlersFactory
 	private MissingHandlersFactory(){}
 	
 	//Cached Stateless Handlers
-	public static final DoNothingHandler DO_NOTHING = new DoNothingHandler();
+	public static final MissingPluginHandler DO_NOTHING = (failedHook) -> {};
 	
 	/*
 	 * Console
@@ -91,7 +90,7 @@ public class MissingHandlersFactory
 	}
 	public static MissingPluginHandler run(Runnable code) 
 	{
-		return failedHook -> code.run();
+		return (failedHook) -> code.run();
 	}
 	
 	private static void addStyledMessages(MessagerHandler handler, MessageStyle style, String... messages) 
