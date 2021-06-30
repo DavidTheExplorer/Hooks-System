@@ -1,4 +1,4 @@
-package dte.hooksystem.serverplugin;
+package dte.hooksystem;
 
 import static org.bukkit.ChatColor.GREEN;
 

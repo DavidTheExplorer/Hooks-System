@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import dte.hooksystem.serverplugin.HookSystem;
+import dte.hooksystem.HookSystem;
 
 public class OnlineOperators implements Listener
 {
