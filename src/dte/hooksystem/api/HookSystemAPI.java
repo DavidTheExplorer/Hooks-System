@@ -13,8 +13,8 @@ public class HookSystemAPI
 	/**
 	 * Creates a service responsible for managing the hooks of the given {@code plugin}.
 	 * 
-	 * @param owningPlugin The plugin which the created service serves.
-	 * @return The hooks manager instance of the provided {@code plugin}.
+	 * @param owningPlugin The plugin which the returned service is responsible for.
+	 * @return The hooks manager of the provided {@code plugin}.
 	 */
 	public static HookService createHookService(Plugin owningPlugin) 
 	{
