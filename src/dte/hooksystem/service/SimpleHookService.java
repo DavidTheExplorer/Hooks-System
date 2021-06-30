@@ -4,11 +4,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.exceptions.HookInitException;
@@ -28,33 +26,8 @@ public class SimpleHookService extends AbstractHookService
 	@Override
 	public void register(PluginHook hook, MissingPluginHandler missingPluginHandler) throws PluginAlreadyHookedException, HookInitException
 	{
-		Objects.requireNonNull(hook);
-		Objects.requireNonNull(missingPluginHandler);
-
-		Plugin plugin = Bukkit.getPluginManager().getPlugin(hook.getPluginName());
-
-		//if the hook's plugin is missing, call the handler and don't register the hook
-		if(plugin == null)
-		{
-			missingPluginHandler.handle(hook);
-			return;
-		}
-
-		//a plugin can't have 2 different hooks
-		if(isHooked(plugin)) 
-			throw new PluginAlreadyHookedException(plugin);
-
-		//init the hook
-		try
-		{
-			hook.init();
-		}
-		catch(Exception exception)
-		{
-			throw new HookInitException(hook.getPluginName(), exception);
-		}
-
-		//register the hook
+		super.register(hook, missingPluginHandler);
+		
 		this.hookByClass.put(hook.getClass(), hook);
 	}
 
