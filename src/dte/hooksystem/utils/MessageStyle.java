@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
+import org.bukkit.ChatColor;
+import org.bukkit.plugin.Plugin;
+
 import com.google.common.collect.Streams;
 
 public class MessageStyle
@@ -16,7 +19,7 @@ public class MessageStyle
 	
 	//this instance always returns the given raw message
 	public static final MessageStyle RAW = new MessageStyle();
-
+	
 	public MessageStyle prefixedWith(String prefix) 
 	{
 		this.prefix = prefix;
@@ -26,6 +29,14 @@ public class MessageStyle
 	{
 		this.suffix = suffix;
 		return this;
+	}
+	public MessageStyle withPluginPrefix(Plugin plugin) 
+	{
+		return prefixedWith(String.format("[%s] ", plugin.getName()));
+	}
+	public MessageStyle colored(ChatColor color) 
+	{
+		return withFinalTouch(message -> color + message);
 	}
 	public MessageStyle withFinalTouch(UnaryOperator<String> finalTouch) 
 	{
