@@ -7,12 +7,12 @@ import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.missingpluginhandlers.CompositeHandler;
-import dte.hooksystem.missingpluginhandlers.DisablePluginHandler;
 import dte.hooksystem.missingpluginhandlers.LogToConsoleHandler;
 import dte.hooksystem.missingpluginhandlers.LoggerMessageHandler;
 import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
@@ -30,9 +30,9 @@ public class MissingHandlersFactory
 	/*
 	 * General
 	 */
-	public static DisablePluginHandler disablePlugin(Plugin plugin) 
+	public static MissingPluginHandler disablePlugin(Plugin plugin) 
 	{
-		return new DisablePluginHandler(plugin);
+		return (failedHook) -> Bukkit.getPluginManager().disablePlugin(plugin);
 	}
 	public static MissingPluginHandler run(Consumer<PluginHook> action)
 	{
