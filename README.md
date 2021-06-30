@@ -25,6 +25,7 @@ public void onEnable()
 ```
 
 ## The Hook Class
+The main interface is PluginHook, but the recommended class to use is **AbstractPluginHook**.
 ```java
 public class LuckPermsHook extends AbstractPluginHook
 {
