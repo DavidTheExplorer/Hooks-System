@@ -23,23 +23,25 @@ public interface HookService extends Iterable<PluginHook>
 	Plugin getOwningPlugin();
 	
 	/**
-	 * Registers the provided {@code hook} as supported by this service's owning plugin, and initializes it.
+	 * Registers the provided {@code hook} as supported by the plugin that owns this service, and tries to initialize it.
+	 * <p>
+	 * If the plugin the hook represents is not on the server, the provided {@code missingPluginHandler} is executed.
 	 * <p>
 	 * The hook can later be retrieved by its class.
 	 * 
 	 * @param hook The hook to register.
-	 * @param missingPluginHandler What happens when the plugin the hook represents is not on the server.
-	 * @throws PluginAlreadyHookedException If this service has a hook for the provided {@code hook}'s plugin.
+	 * @param missingPluginHandler What happens if the plugin the hook represents is not on the server.
+	 * @throws PluginAlreadyHookedException If this service already has a hook for the {@code hook}'s plugin.
 	 * @throws HookInitException If there was a problem during the hook's {@code init()} method.
 	 */
 	void register(PluginHook hook, MissingPluginHandler missingPluginHandler) throws PluginAlreadyHookedException, HookInitException;
 
 	/**
-	 * Returns an Optional of the registered instance of the provided {@code hook class}.
+	 * Returns an Optional of the registered hook of the provided {@code hook class}.
 	 * <p>
 	 * Empty Optional is returned in the following cases:
 	 * <ul>
-	 * 	<li>The plugin the registered hook represents is not on the server.</li>
+	 * 	<li>The plugin the hook represents is not on the server.</li>
 	 * 	<li>The hook's plugin is on the server, but the hook is not available.
 	 * 	<li>an Exception was thrown during the registered hook's <i>init()</i> method.</li>
 	 * </ul>
@@ -52,22 +54,21 @@ public interface HookService extends Iterable<PluginHook>
 	<H extends PluginHook> Optional<H> query(Class<H> hookClass);
 
 	/**
-	 * Returns all the registered hooks that extend the provided {@code parent};
-	 * Useful when you want to support multiple plugins that provide the same functionality.
+	 * Returns all the registered hooks that extend the provided {@code parent}.
+	 * <p>
+	 * Useful when you want to treat multiple plugins that provide the same functionality.
 	 * 
 	 * @param <T> The parent type.
-	 * @param parentClass The parent class.
-	 * @return The registered hooks that extend the specified {@code parent} class.
+	 * @param parent The parent class.
+	 * @return All registered hooks that extend the specified {@code parent}.
 	 */
 	<T> List<T> queryAll(Class<T> parent);
 
 	/**
-	 * Returns an Optional of registered hook that extends the provided {@code parent};
-	 * If 2 or more were registered, the provided {@code conflictsHandler} is executed.
+	 * Returns an Optional of the registered hook that extend the provided {@code parent};
+	 * If multiple were registered, the provided {@code conflictHandler} is executed and Empty Optional is returned.
 	 * <p>
-	 * Useful when you want to support multiple plugins that provide the same service, but only one at a time.
-	 * <p>
-	 * Empty Optional is returned when None OR Multiple hooks of the provided {@code parent} were registered.
+	 * Useful when you want to support multiple plugins that provide the same functionality, <b>but</b> only one at a time.
 	 * 
 	 * @param <T> The parent type.
 	 * @param parent The parent class.
@@ -79,8 +80,6 @@ public interface HookService extends Iterable<PluginHook>
 	/**
 	 * Returns an Optional of registered hook that extends the provided {@code parent};
 	 * If multiple hooks were registered, the provided {@code conflictResolver} accepts them and decides which one to return.
-	 * <p>
-	 * Empty Optional is returned if no instances of the provided {@code parent} were registered.
 	 * 
 	 * @param <T> The parent type.
 	 * @param parent The parent's class.
@@ -90,7 +89,7 @@ public interface HookService extends Iterable<PluginHook>
 	<T> Optional<T> query(Class<T> parent, Function<List<T>, T> conflictResolver); 
 
 	/**
-	 * Returns the currently registered hooks inside this repository.
+	 * Returns the currently registered hooks inside this service.
 	 * 
 	 * @return The currently registered hooks.
 	 */

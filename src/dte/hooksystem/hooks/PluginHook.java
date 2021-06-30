@@ -1,8 +1,7 @@
 package dte.hooksystem.hooks;
 
 /**
- * Represents a functionality wrapper of a certain plugin.
- * Implementors expose <i>public</i> methods in order to encapsulate the internal plugin's data.
+ * Represents a functionality wrapper of a certain plugin, by exposing <i>public</i> methods.
  * <p>
  * The suggested name for implementors is: <i>pluginName</i>Hook (e.g EssentialsHook, WorldEditHook).
  */
