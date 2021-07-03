@@ -14,9 +14,9 @@ This library manages your plugin\'s hooks using OOP - which massively reduces yo
 @Override
 public void onEnable()
 {
-    HookService hookService = HookSystemAPI.createHookService(this);
+    HookService hookService = HookSystemAPI.getService(this);
     
-    //Register LuckPerms' hook. LuckPerms isn't on the server? disable the plugin.
+    //Register the hook of LuckPerms. LuckPerms isn't on the server? disable the plugin.
     hookService.register(new LuckPermsHook(), disablePlugin(this)); 
 
     //later, do something if LuckPerms is on the server.
