@@ -3,20 +3,25 @@ People 99% of the time use _static_ methods or Bukkit's nasty ways to access oth
 This library manages your plugin\'s hooks using OOP - which simplifies and reduces your code, and allows useful features when your plugin depends on multiple plugins.
 
 ## Show me the Magic!
+inside onEnable, You:
+* Want to register a hook, but disable your plugin if the hook's plugin is missing?
+```java
+hookService.register(new WorldGuardHook(), disablePlugin(this)); 
+```
+* Want to notify the console, and then close your plugin?
+```java
+hookService.register(new LuckPermsHook(), 
+	byOrder(logToConsole(this, "Closing because LuckPerms is missing!"), disablePlugin(this))); 
+```
+And here's the Full onEnable():
 ```java
 @Override
 public void onEnable()
 {
     HookService hookService = HookSystemAPI.getService(this);
     
-    //Register the hook of LuckPerms. Is LuckPerms missing? Log then Disable!
-    hookService.register(new LuckPermsHook(), byOrder(
-    	logToConsole(this, "Closing because LuckPerms is missing"), 
-    	disablePlugin(this)
-    )); 
-    
-    //Register the hook of WorldGuard. Is WorldGuard missing? Simply disable the plugin.
     hookService.register(new WorldGuardHook(), disablePlugin(this)); 
+    hookService.register(new LuckPermsHook(), byOrder(logToConsole(this, "Closing because LuckPerms is missing!"), disablePlugin(this))); 
    
    
     //later, do something if LuckPerms is on the server.
@@ -61,30 +66,9 @@ public class LuckPermsHook extends AbstractPluginHook
 The idea is to encapsulate the plugin's API behind public methods.\
 Visit the [Example Plugin](https://github.com/DavidTheExplorer/Hooks-System/blob/master/src/dte/hooksystem/exampleplugin/hooks/WorldGuardHook.java) to see many more examples.
 
-## Hooks Registration
-First of all, grab your plugin\'s **HookService**:
-```java
-//in your onEnable()
-HookService hookService = HookSystemAPI.createHookService(this);
-```
-You:
-
-* Want to register a hook and close your plugin if the plugin is not on the server?
-```java
-hookService.register(new WorldGuardHook(), disablePlugin(this));
-```
-
-* Want to notify the console, and then close the plugin?
-```java
-hookService.register(new WorldGuardHook(), 
-   byOrder(
-      logToConsole(this, "cannot function with WorldGuard! so it won't use it.")),
-       disablePlugin(this)
-   );
-```
-
-_byOrder()_, _logToConsole()_, and _disablePlugin()_ were statically imported from **MissingHandlersFactory**, which offers common handlers.\
-They run only if the plugin is not on the server!
+# Important
+In the Examples: _byOrder()_, _logToConsole()_, and _disablePlugin()_ were statically imported from **MissingHandlersFactory**, which offers many commonly used handlers.\
+It's very recommended to always do so in order to maintain your code concise.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
