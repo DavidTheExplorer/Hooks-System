@@ -1,6 +1,6 @@
 # No more static methods.
-People 99% of the time use _static_ methods or Bukkit's nasty ways to communicate with other plugins.\
-This library manages your plugin\'s hooks using OOP - which massively reduces your code, and allows useful features when your plugin depends on multiple plugins.
+People 99% of the time use _static_ methods or Bukkit's nasty ways to access other plugins' APIs.\
+This library manages your plugin\'s hooks using OOP - which simplifies and reduces your code, and allows useful features when your plugin depends on multiple plugins.
 
 ## Benefits
 * Short English API.
