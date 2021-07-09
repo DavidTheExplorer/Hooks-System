@@ -2,27 +2,34 @@
 People 99% of the time use _static_ methods or Bukkit's nasty ways to access other plugins' APIs.\
 This library manages your plugin\'s hooks using OOP - which simplifies and reduces your code, and allows useful features when your plugin depends on multiple plugins.
 
-## Benefits
-* Short English API.
-* Auto check whether the plugin you depend on is exists in the server; If not, a special handler runs.
-* Code reduction, even if you only depend on **1** plugin.
-* Hooks Abstraction - Multiple hooks classes can implement an interface, and you can get the implementation that's on the server.
-* Supports Bukkit Services API.
-
-## Show me the magic!
+## Show me the Magic!
 ```java
 @Override
 public void onEnable()
 {
     HookService hookService = HookSystemAPI.getService(this);
     
-    //Register the hook of LuckPerms. LuckPerms isn't on the server? disable the plugin.
-    hookService.register(new LuckPermsHook(), disablePlugin(this)); 
-
+    //Register the hook of LuckPerms. Is LuckPerms missing? Log then Disable!
+    hookService.register(new LuckPermsHook(), byOrder(
+    	logToConsole(this, "Closing because LuckPerms is missing"), 
+    	disablePlugin(this)
+    )); 
+    
+    //Register the hook of WorldGuard. Is WorldGuard missing? Simply disable the plugin.
+    hookService.register(new WorldGuardHook(), disablePlugin(this)); 
+   
+   
     //later, do something if LuckPerms is on the server.
     hookService.query(LuckPermsHook.class).isPresent(lpHook -> System.out.println(lpHook.groupExists("owner"));
 }
 ```
+
+## Benefits
+* Short English API.
+* Auto check whether the plugin you depend on is exists in the server; If not, a special handler runs.
+* Code reduction, even if you only depend on **1** plugin.
+* Hooks Abstraction - Multiple hooks classes can implement an interface, and you can get the implementation that's on the server.
+* Supports Bukkit Services API.
 
 ## The Hook Class
 The main interface is PluginHook, but the recommended class to use is **AbstractPluginHook**.
