@@ -1,6 +1,33 @@
 # No more static methods.
-People 99% of the time use _static_ methods or Bukkit's nasty ways to communicate with other plugins.\
-This library manages your plugin\'s hooks using OOP - which massively reduces your code, and allows useful features when your plugin depends on multiple plugins.
+People 99% of the time use _static_ methods or Bukkit's nasty ways to access other plugins' APIs.\
+This library manages your plugin\'s hooks using OOP - which simplifies and reduces your code, and allows useful features when your plugin depends on multiple plugins.
+
+## Show me the Magic!
+inside onEnable, You:
+* Want to register a hook, but disable your plugin if the hook's plugin is missing?
+```java
+hookService.register(new WorldGuardHook(), disablePlugin(this)); 
+```
+* Want to notify the console, and then close your plugin?
+```java
+hookService.register(new LuckPermsHook(), 
+	byOrder(logToConsole(this, "Closing because LuckPerms is missing!"), disablePlugin(this))); 
+```
+And here's the Full onEnable():
+```java
+@Override
+public void onEnable()
+{
+    HookService hookService = HookSystemAPI.getService(this);
+    
+    hookService.register(new WorldGuardHook(), disablePlugin(this)); 
+    hookService.register(new LuckPermsHook(), byOrder(logToConsole(this, "Closing because LuckPerms is missing!"), disablePlugin(this))); 
+   
+   
+    //later, do something if LuckPerms is on the server.
+    hookService.query(LuckPermsHook.class).isPresent(lpHook -> System.out.println(lpHook.groupExists("owner"));
+}
+```
 
 ## Benefits
 * Short English API.
@@ -8,21 +35,6 @@ This library manages your plugin\'s hooks using OOP - which massively reduces yo
 * Code reduction, even if you only depend on **1** plugin.
 * Hooks Abstraction - Multiple hooks classes can implement an interface, and you can get the implementation that's on the server.
 * Supports Bukkit Services API.
-
-## Show me the magic!
-```java
-@Override
-public void onEnable()
-{
-    HookService hookService = HookSystemAPI.getService(this);
-    
-    //Register the hook of LuckPerms. LuckPerms isn't on the server? disable the plugin.
-    hookService.register(new LuckPermsHook(), disablePlugin(this)); 
-
-    //later, do something if LuckPerms is on the server.
-    hookService.query(LuckPermsHook.class).isPresent(lpHook -> System.out.println(lpHook.groupExists("owner"));
-}
-```
 
 ## The Hook Class
 The main interface is PluginHook, but the recommended class to use is **AbstractPluginHook**.
@@ -54,30 +66,9 @@ public class LuckPermsHook extends AbstractPluginHook
 The idea is to encapsulate the plugin's API behind public methods.\
 Visit the [Example Plugin](https://github.com/DavidTheExplorer/Hooks-System/blob/master/src/dte/hooksystem/exampleplugin/hooks/WorldGuardHook.java) to see many more examples.
 
-## Hooks Registration
-First of all, grab your plugin\'s **HookService**:
-```java
-//in your onEnable()
-HookService hookService = HookSystemAPI.createHookService(this);
-```
-You:
-
-* Want to register a hook and close your plugin if the plugin is not on the server?
-```java
-hookService.register(new WorldGuardHook(), disablePlugin(this));
-```
-
-* Want to notify the console, and then close the plugin?
-```java
-hookService.register(new WorldGuardHook(), 
-   byOrder(
-      logToConsole(this, "cannot function with WorldGuard! so it won't use it.")),
-       disablePlugin(this)
-   );
-```
-
-_byOrder()_, _logToConsole()_, and _disablePlugin()_ were statically imported from **MissingHandlersFactory**, which offers common handlers.\
-They run only if the plugin is not on the server!
+# Important
+In the Examples: _byOrder()_, _logToConsole()_, and _disablePlugin()_ were statically imported from **MissingHandlersFactory**, which offers many commonly used handlers.\
+It's very recommended to always do so in order to maintain your code concise.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
