@@ -15,6 +15,7 @@ import org.bukkit.plugin.Plugin;
 import dte.hooksystem.exceptions.HookInitException;
 import dte.hooksystem.exceptions.PluginAlreadyHookedException;
 import dte.hooksystem.hooks.PluginHook;
+import dte.hooksystem.hooks.ResponsibleHook;
 import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
 
 /**
@@ -65,6 +66,12 @@ public abstract class AbstractHookService implements HookService
 		{
 			throw new HookInitException(hook.getPluginName(), exception);
 		}
+	}
+	
+	@Override
+	public void register(ResponsibleHook responsibleHook) throws PluginAlreadyHookedException, HookInitException 
+	{
+		register(responsibleHook, responsibleHook.getMissingPluginHandler());
 	}
 
 	@Override
