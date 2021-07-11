@@ -9,8 +9,6 @@ import java.util.Set;
 
 import org.bukkit.plugin.Plugin;
 
-import dte.hooksystem.exceptions.HookInitException;
-import dte.hooksystem.exceptions.PluginAlreadyHookedException;
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
 
@@ -24,10 +22,8 @@ public class SimpleHookService extends AbstractHookService
 	}
 	
 	@Override
-	public void register(PluginHook hook, MissingPluginHandler missingPluginHandler) throws PluginAlreadyHookedException, HookInitException
+	public void register(PluginHook hook, MissingPluginHandler missingPluginHandler)
 	{
-		super.register(hook, missingPluginHandler);
-		
 		this.hookByClass.put(hook.getClass(), hook);
 	}
 

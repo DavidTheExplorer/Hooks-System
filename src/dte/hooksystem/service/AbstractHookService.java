@@ -9,11 +9,10 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-import dte.hooksystem.exceptions.HookInitException;
-import dte.hooksystem.exceptions.PluginAlreadyHookedException;
+import dte.hooksystem.hookingprocess.ResponsibleHookingProcess;
+import dte.hooksystem.hookingprocess.SimpleHookingProcess;
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.hooks.ResponsibleHook;
 import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
@@ -39,39 +38,21 @@ public abstract class AbstractHookService implements HookService
 	}
 
 	@Override
-	public void register(PluginHook hook, MissingPluginHandler missingPluginHandler) throws PluginAlreadyHookedException, HookInitException
+	public SimpleHookingProcess register(PluginHook hook)
 	{
 		Objects.requireNonNull(hook);
-		Objects.requireNonNull(missingPluginHandler);
-
-		Plugin plugin = Bukkit.getPluginManager().getPlugin(hook.getPluginName());
-
-		//if the hook's plugin is missing, call the handler and don't register the hook
-		if(plugin == null)
-		{
-			missingPluginHandler.handle(hook);
-			return;
-		}
-
-		//a plugin can't have 2 different hooks
-		if(isHooked(plugin))
-			throw new PluginAlreadyHookedException(plugin);
-
-		//init the hook
-		try
-		{
-			hook.init();
-		}
-		catch(Exception exception)
-		{
-			throw new HookInitException(hook.getPluginName(), exception);
-		}
+		
+		return new SimpleHookingProcess(hook, this);
 	}
 	
 	@Override
-	public void register(ResponsibleHook responsibleHook) throws PluginAlreadyHookedException, HookInitException 
+	public ResponsibleHookingProcess register(ResponsibleHook responsibleHook)
 	{
-		register(responsibleHook, responsibleHook.getMissingPluginHandler());
+		Objects.requireNonNull(responsibleHook);
+		
+		SimpleHookingProcess simpleHookingProcess = register((PluginHook) responsibleHook);
+		
+		return ResponsibleHookingProcess.decorating(simpleHookingProcess, responsibleHook);
 	}
 
 	@Override
@@ -83,13 +64,6 @@ public abstract class AbstractHookService implements HookService
 			return Optional.empty();
 
 		return Optional.of(hooksFound.get(0)).filter(PluginHook::isAvailable);
-	}
-
-	protected boolean isHooked(Plugin plugin) 
-	{
-		String pluginName = Objects.requireNonNull(plugin).getName();
-
-		return getHooks().stream().anyMatch(hook -> hook.getPluginName().equals(pluginName));
 	}
 
 	@Override
@@ -123,7 +97,15 @@ public abstract class AbstractHookService implements HookService
 
 		return hooksFound.isEmpty() ? Optional.empty() : Optional.of(conflictResolver.apply(hooksFound));
 	}
+	
+	@Override
+	public boolean isHooked(Plugin plugin) 
+	{
+		String pluginName = Objects.requireNonNull(plugin).getName();
 
+		return getHooks().stream().anyMatch(hook -> hook.getPluginName().equals(pluginName));
+	}
+	
 	@Override
 	public int size() 
 	{

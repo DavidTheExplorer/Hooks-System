@@ -8,8 +8,8 @@ import java.util.function.Function;
 
 import org.bukkit.plugin.Plugin;
 
-import dte.hooksystem.exceptions.HookInitException;
-import dte.hooksystem.exceptions.PluginAlreadyHookedException;
+import dte.hooksystem.hookingprocess.ResponsibleHookingProcess;
+import dte.hooksystem.hookingprocess.SimpleHookingProcess;
 import dte.hooksystem.hooks.PluginHook;
 import dte.hooksystem.hooks.ResponsibleHook;
 import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
@@ -22,7 +22,25 @@ public interface HookService extends Iterable<PluginHook>
 	 * @return This service's owning plugin.
 	 */
 	Plugin getOwningPlugin();
+
+	/**
+	 * Starts and returns an object that describes the hooking process.
+	 * 
+	 * @param hook The hook to register.
+	 * @return An object that registers the provided {@code hook}.
+	 */
+	SimpleHookingProcess register(PluginHook hook);
 	
+	/**
+	 * Since a {@code ResponsibleHook} defines its {@code MissingPluginHandler}, 
+	 * This method returns an equivalent object to {@link #register(PluginHook)} but the termination method <b>orElse(MissingPluginHandler)</b> is replaced by <b>finish()</b>.
+	 * 
+	 * @param responsibleHook The hook to register.
+	 * @return An object that registers the provided {@code hook}.
+	 * @see #register(PluginHook)
+	 */
+	ResponsibleHookingProcess register(ResponsibleHook responsibleHook);
+
 	/**
 	 * Registers the provided {@code hook} as supported by the plugin that owns this service, and tries to initialize it.
 	 * <p>
@@ -32,23 +50,8 @@ public interface HookService extends Iterable<PluginHook>
 	 * 
 	 * @param hook The hook to register.
 	 * @param missingPluginHandler What happens if the plugin the hook represents is not on the server.
-	 * @throws PluginAlreadyHookedException If this service already has a hook for the {@code hook}'s plugin.
-	 * @throws HookInitException If there was a problem during the hook's {@code init()} method.
 	 */
-	void register(PluginHook hook, MissingPluginHandler missingPluginHandler) throws PluginAlreadyHookedException, HookInitException;
-	
-	/**
-	 * Registers the provided {@code responsibleHook} as supported by the plugin that owns this service, and tries to initialize it.
-	 * <p>
-	 * If the plugin the hook represents is not on the server, its {@code missingPluginHandler} is executed.
-	 * <p>
-	 * The hook can later be retrieved by its class.
-	 * 
-	 * @param hook The hook to register.
-	 * @throws PluginAlreadyHookedException If this service already has a hook for the {@code hook}'s plugin.
-	 * @throws HookInitException If there was a problem during the hook's {@code init()} method.
-	 */
-	void register(ResponsibleHook responsibleHook) throws PluginAlreadyHookedException, HookInitException;
+	void register(PluginHook hook, MissingPluginHandler missingPluginHandler);
 
 	/**
 	 * Returns an Optional of the registered hook of the provided {@code hook class}.
@@ -101,6 +104,14 @@ public interface HookService extends Iterable<PluginHook>
 	 * @return The registered hook of the provided {@code parent}.
 	 */
 	<T> Optional<T> query(Class<T> parent, Function<List<T>, T> conflictResolver); 
+
+	/**
+	 * Checks whether this service contains a hook for the provided {@code plugin}.
+	 * 
+	 * @param plugin The plugin to check.
+	 * @return Whether this service serves the provided {@code plugin}.
+	 */
+	boolean isHooked(Plugin plugin);
 
 	/**
 	 * Returns the currently registered hooks inside this service.
