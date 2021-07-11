@@ -42,7 +42,7 @@ public class SimpleHookingProcess implements HookingProcess<SimpleHookingProcess
 
 		//a plugin can't have 2 different hooks
 		if(this.hookService.isHooked(plugin))
-			throw new PluginAlreadyHookedException(plugin);
+			throw new PluginAlreadyHookedException(this.hook, plugin);
 		
 		//init the hook
 		try
@@ -51,7 +51,7 @@ public class SimpleHookingProcess implements HookingProcess<SimpleHookingProcess
 		}
 		catch(Exception exception)
 		{
-			throw new HookInitException(this.hook.getPluginName(), exception);
+			throw new HookInitException(this.hook, exception);
 		}
 		
 		this.hookService.register(this.hook, missingPluginHandler);
