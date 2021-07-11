@@ -5,8 +5,8 @@ import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.exceptions.HookInitException;
 import dte.hooksystem.exceptions.PluginAlreadyHookedException;
-import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
+import dte.hooksystem.hook.PluginHook;
+import dte.hooksystem.missingpluginhandler.MissingPluginHandler;
 import dte.hooksystem.service.HookService;
 
 public class SimpleHookingProcess implements HookingProcess<SimpleHookingProcess>

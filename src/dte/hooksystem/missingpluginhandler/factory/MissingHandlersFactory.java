@@ -1,4 +1,4 @@
-package dte.hooksystem.missingpluginhandlers.factory;
+package dte.hooksystem.missingpluginhandler.factory;
 
 import static dte.hooksystem.utils.MessageStyle.RAW;
 
@@ -11,12 +11,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
-import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.missingpluginhandlers.CompositeHandler;
-import dte.hooksystem.missingpluginhandlers.LogToConsoleHandler;
-import dte.hooksystem.missingpluginhandlers.LoggerMessageHandler;
-import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
-import dte.hooksystem.missingpluginhandlers.messager.MessagerHandler;
+import dte.hooksystem.hook.PluginHook;
+import dte.hooksystem.missingpluginhandler.CompositeHandler;
+import dte.hooksystem.missingpluginhandler.LogToConsoleHandler;
+import dte.hooksystem.missingpluginhandler.LoggerMessageHandler;
+import dte.hooksystem.missingpluginhandler.MissingPluginHandler;
+import dte.hooksystem.missingpluginhandler.messager.MessagerHandler;
 import dte.hooksystem.utils.MessageStyle;
 
 public class MissingHandlersFactory

@@ -11,11 +11,11 @@ import java.util.function.Function;
 
 import org.bukkit.plugin.Plugin;
 
+import dte.hooksystem.hook.PluginHook;
+import dte.hooksystem.hook.ResponsibleHook;
 import dte.hooksystem.hookingprocess.ResponsibleHookingProcess;
 import dte.hooksystem.hookingprocess.SimpleHookingProcess;
-import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.hooks.ResponsibleHook;
-import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
+import dte.hooksystem.missingpluginhandler.MissingPluginHandler;
 
 /**
  * This class provides a common skeletal implementation for {@link HookService} that minimizes the effort of implementing it.

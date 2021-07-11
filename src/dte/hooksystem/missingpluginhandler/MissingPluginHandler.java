@@ -1,6 +1,6 @@
-package dte.hooksystem.missingpluginhandlers;
+package dte.hooksystem.missingpluginhandler;
 
-import dte.hooksystem.hooks.PluginHook;
+import dte.hooksystem.hook.PluginHook;
 
 @FunctionalInterface
 public interface MissingPluginHandler

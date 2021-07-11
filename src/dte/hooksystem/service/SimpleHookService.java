@@ -9,8 +9,8 @@ import java.util.Set;
 
 import org.bukkit.plugin.Plugin;
 
-import dte.hooksystem.hooks.PluginHook;
-import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
+import dte.hooksystem.hook.PluginHook;
+import dte.hooksystem.missingpluginhandler.MissingPluginHandler;
 
 public class SimpleHookService extends AbstractHookService
 {
