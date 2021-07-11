@@ -1,17 +1,19 @@
 package dte.hooksystem.exceptions;
 
+import dte.hooksystem.hook.PluginHook;
+
 /**
  * Thrown when an Exception was thrown during the <i>initialization</i> of a hook, so it can be handled appropriately.
  */
-public class HookInitException extends HookException
+public class HookInitException extends HookingException
 {
 	private final Exception initException;
 
 	private static final long serialVersionUID = 4863066975268384377L;
 	
-	public HookInitException(String pluginName, Exception initException)
+	public HookInitException(PluginHook hook, Exception initException)
 	{
-		super(pluginName, "%plugin's Registered Hook generated an Exception during its Initalization!");
+		super(hook, "%plugin%'s Registered Hook generated an Exception during initalization!");
 		
 		initCause(this.initException = initException);
 	}
