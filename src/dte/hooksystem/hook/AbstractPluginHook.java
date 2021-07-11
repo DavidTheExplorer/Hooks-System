@@ -1,4 +1,4 @@
-package dte.hooksystem.hooks;
+package dte.hooksystem.hook;
 
 import java.util.Objects;
 

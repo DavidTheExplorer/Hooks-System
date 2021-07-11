@@ -2,8 +2,8 @@ package dte.hooksystem.hookingprocess;
 
 import dte.hooksystem.exceptions.HookInitException;
 import dte.hooksystem.exceptions.PluginAlreadyHookedException;
-import dte.hooksystem.hooks.ResponsibleHook;
-import dte.hooksystem.missingpluginhandlers.MissingPluginHandler;
+import dte.hooksystem.hook.ResponsibleHook;
+import dte.hooksystem.missingpluginhandler.MissingPluginHandler;
 
 public class ResponsibleHookingProcess extends HookingProcessDecorator<SimpleHookingProcess>
 {

@@ -1,4 +1,4 @@
-package dte.hooksystem.hooks;
+package dte.hooksystem.hook;
 
 /**
  * Represents a functionality wrapper of a certain plugin, by exposing <i>public</i> methods.
