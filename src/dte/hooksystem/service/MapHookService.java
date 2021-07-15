@@ -12,11 +12,11 @@ import org.bukkit.plugin.Plugin;
 import dte.hooksystem.hook.PluginHook;
 import dte.hooksystem.missingpluginhandler.MissingPluginHandler;
 
-public class SimpleHookService extends AbstractHookService
+public class MapHookService extends AbstractHookService
 {
 	private final Map<Class<?>, PluginHook> hookByClass = new HashMap<>();
 
-	public SimpleHookService(Plugin owningPlugin)
+	public MapHookService(Plugin owningPlugin)
 	{
 		super(owningPlugin);
 	}

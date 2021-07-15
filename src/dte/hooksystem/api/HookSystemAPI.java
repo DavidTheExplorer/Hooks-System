@@ -6,7 +6,7 @@ import java.util.Map;
 import org.bukkit.plugin.Plugin;
 
 import dte.hooksystem.service.HookService;
-import dte.hooksystem.service.SimpleHookService;
+import dte.hooksystem.service.MapHookService;
 
 public class HookSystemAPI 
 {
@@ -23,6 +23,6 @@ public class HookSystemAPI
 	 */
 	public static HookService getService(Plugin owningPlugin) 
 	{
-		return PLUGINS_SERVICES.computeIfAbsent(owningPlugin, SimpleHookService::new);
+		return PLUGINS_SERVICES.computeIfAbsent(owningPlugin, MapHookService::new);
 	}
 }
