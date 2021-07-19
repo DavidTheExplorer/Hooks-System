@@ -6,14 +6,39 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 /**
- * This class provides a convenient skeletal implementation for {@link PluginHook}.
+ * This class provides a convenient skeletal implementation for the {@link PluginHook} interface:
  * <p>
- * How to extend:
  * <ul>
- * 	<li>super the constructor with a plugin's name.</li>
- * 	<li>Override {@code init()} if you want to setup the hook(<b>Don't</b> use the constructor to access the plugin's API. this method runs only if the plugin is on the server)</li>
- * 	<li>Add any useful methods you want :)</li>
+ * 	<li>The provided implementations of <i>hashCode()</i> and <i>equals()</i> depend on the plugin's name.</li>
+ * 	<li>Bukkit's Services API was simplified, and can be accessed by protected methods.</li>
  * </ul>
+ * <p>
+ * Here is an imaginary implementation for Essentials:
+ * <pre>
+ * public class EssentialsHook extends AbstractPluginHook {
+ * 	
+ * 	private AFKManager afkManager;
+ * 
+ * 	<i>//super the constructor with the plugin's name</i>
+ * 
+ * 	public EssentialsHook() {
+ * 		super("Essentials"); 
+ * 	}
+ * 	
+ * 	<i>//Add some API-accessing methods</i>
+ * 
+ * 	public boolean isAFK(Player player) {
+ * 		return this.afkManager.isAFK(player);
+ * 	}
+ * 
+ * 	<i>//Setup afkManager field. This runs ONLY if Essentials is present!</i>
+ * 
+ * 	{@code @Override}
+ * 	public void init() throws Exception {
+ * 		this.afkManager = EssentialsAPI.getAfkManager();
+ * 	}
+ * }
+ * </pre>
  */
 public abstract class AbstractPluginHook implements PluginHook
 {

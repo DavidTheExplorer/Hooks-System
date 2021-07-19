@@ -3,7 +3,7 @@ package dte.hooksystem.exceptions;
 import dte.hooksystem.hook.PluginHook;
 
 /**
- * Thrown when an Exception was thrown during the <i>initialization</i> of a hook, so it can be handled appropriately.
+ * Wraps an Exception that was thrown during the initialization of a hook.
  */
 public class HookInitException extends HookingException
 {
