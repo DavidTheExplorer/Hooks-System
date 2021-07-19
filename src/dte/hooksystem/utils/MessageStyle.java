@@ -17,7 +17,7 @@ public class MessageStyle
 	private String prefix, suffix;
 	private final List<UnaryOperator<String>> finalTouches = new ArrayList<>();
 	
-	//this instance always returns the given raw message
+	//this instance always returns the given message
 	public static final MessageStyle RAW = new MessageStyle();
 	
 	public MessageStyle prefixedWith(String prefix) 

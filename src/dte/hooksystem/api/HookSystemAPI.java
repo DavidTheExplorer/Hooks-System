@@ -16,9 +16,9 @@ public class HookSystemAPI
 	private static final Map<Plugin, HookService> PLUGINS_SERVICES = new HashMap<>();
 	
 	/**
-	 * Returns a cached service responsible for managing the hooks of the given {@code plugin}.
+	 * Returns the responsible service for managing the hooks of the provided {@code plugin}.
 	 * 
-	 * @param owningPlugin The plugin which the returned service is responsible for.
+	 * @param owningPlugin The plugin which the returned service serves.
 	 * @return The hooks manager of the provided {@code plugin}.
 	 */
 	public static HookService getService(Plugin owningPlugin) 

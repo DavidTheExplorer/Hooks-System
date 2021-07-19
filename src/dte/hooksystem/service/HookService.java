@@ -42,7 +42,7 @@ public interface HookService extends Iterable<PluginHook>
 	ResponsibleHookingProcess register(ResponsibleHook responsibleHook);
 
 	/**
-	 * Registers the provided {@code hook} as supported by the plugin that owns this service, and tries to initialize it.
+	 * Registers the provided {@code hook} as supported by the plugin that owns this service, and initializes it.
 	 * <p>
 	 * If the plugin the hook represents is not on the server, the provided {@code missingPluginHandler} is executed.
 	 * <p>
@@ -119,7 +119,6 @@ public interface HookService extends Iterable<PluginHook>
 	 * @return The currently registered hooks.
 	 */
 	Set<PluginHook> getHooks();
-
 
 	/**
 	 * Returns the amount of registered hooks in this service.
