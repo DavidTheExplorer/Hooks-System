@@ -19,7 +19,7 @@ public class CompositeHandler implements MissingPluginHandler, Iterable<MissingP
 	}
 	public static CompositeHandler of(MissingPluginHandler... handlers) 
 	{
-		Collection<MissingPluginHandler> finalHandlers = ArrayUtils.toCollection(handlers, LinkedHashSet::new);
+		Collection<MissingPluginHandler> finalHandlers = ArrayUtils.to(LinkedHashSet::new, handlers);
 
 		return new CompositeHandler(finalHandlers);
 	}
