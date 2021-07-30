@@ -6,12 +6,13 @@ This library manages your plugin\'s hooks using OOP - which simplifies and reduc
 inside onEnable, You:
 * Want to register a hook, but disable your plugin if the hook's plugin is missing?
 ```java
+//Similarly to Collectors.toList(), you can(and are supposed to) statically import disablePlugin()
 hookService.register(new WorldGuardHook()).orElse(disablePlugin(this)); 
 ```
 * Want to notify the console, and then close your plugin?
 ```java
 hookService.register(new LuckPermsHook()).orElse(byOrder(
-	logToConsole(this, "Closing because LuckPerms is missing!"), 
+	logToConsole(this, "Closing because LuckPerms is missing!"),
 	disablePlugin(this))); 
 ```
 And here's the Full onEnable():
@@ -21,7 +22,7 @@ public void onEnable()
 {
     HookService hookService = HookSystemAPI.getService(this);
     
-    hookService.register(new WorldGuardHook()).orElse(disablePlugin(this)); 
+    hookService.register(new WorldGuardHook()).orElse(disablePlugin(this));
     hookService.register(new LuckPermsHook()).orElse(byOrder(logToConsole(this, "Closing because LuckPerms is missing!"), disablePlugin(this))); 
    
    
